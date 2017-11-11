@@ -145,7 +145,7 @@ router.all('/:debug?/move', function(req, res) {
       map[coords[1]][coords[0]] = 10
 
       // WAS 3
-			if (i < 10) {
+			if (i < 8) {
 				continue;
 			}
 
@@ -161,7 +161,7 @@ router.all('/:debug?/move', function(req, res) {
               //break yLoop;
               continue;
             }
-            let height = mapFunction(cSquare, 0, 20, 0, 12); // was 30
+            let height = mapFunction(cSquare, 0, 20, 0, 11); // was 30
 
 						//map[y][x] = Math.max(height, map[y][x])
             if (map[y][x] < -88)
@@ -199,7 +199,7 @@ router.all('/:debug?/move', function(req, res) {
 
 function cost(x, y) {
 
-	if (isOutOfBound(x, y)) return 10
+	if (isOutOfBound(x, y)) return 11
 
 	return map[y][x]
 }
