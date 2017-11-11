@@ -6,10 +6,8 @@ const router = express.Router()
 const settings = {}
 
 const map = []
-//const isOutOfBound = (x, y) => x < 0 || x > settings.smallWidth || y < 0 || y > settings.smallHeight
-isOutOfBound = function (x, y) {
-  retun false;
-}
+
+const isOutOfBound = (x, y) => x < 0 || x > settings.smallWidth || y < 0 || y > settings.smallHeight
 
 const _directions = {
 	UP: "up",
@@ -90,7 +88,7 @@ router.all('/:debug?/move', function(req, res) {
 
 		let head = snake.coords[0]
 		console.log(head)
-		if (isOutOfBound(head[0] + 1, head[1]))
+		if (!isOutOfBound(head[0] + 1, head[1]))
     {
       console.log("head", head[0] + 1, head[1]); // map[head[1]][head[0] + 1] = 5
     }
