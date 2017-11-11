@@ -1,29 +1,39 @@
-var express = require('express')
-var router = express.Router()
+const express = require('express')
+const router = express.Router()
 
-// Handle POST request to '/start'
+const settings = {}
+
+/*
+  Handle Game Start
+*/
 router.all('/start', function(req, res) {
-	// NOTE: Do something here to start the game
+	// save init values
+	settings.width = req.body.width
+	settings.height = req.body.height
+	settings.game_id = req.body.game_id
 
-	// Response data
-	var data = {
+	console.log(settings)
+
+	// our values
+	const data = {
 		color: "#DFFF00",
 		name: "Cage Snake",
-		head_url: "http://www.placecage.com/c/200/200", // optional, but encouraged!
-		taunt: "Let's do thisss thang!", // optional, but encouraged!
+		head_url: "http://www.placecage.com/c/200/200",
+		taunt: "Let's do thisss thang!"
 	}
 
 	return res.json(data)
 })
 
-// Handle POST request to '/move'
+/*
+  Handle Game Loop
+*/
 router.all('/move', function(req, res) {
-	// NOTE: Do something here to generate your move
 
 	// Response data
-	var data = {
+	const data = {
 		move: 'up', // one of: ['up','down','left','right']
-		taunt: 'Outta my way, snake!', // optional, but encouraged!
+		taunt: 'Outta my way, snake!'
 	}
 
 	return res.json(data)
