@@ -183,11 +183,11 @@ router.all('/:debug?/move', function(req, res) {
 		// calc height map
 
 	}
-
+/*
 	for (let snake of req.body.dead_snakes) {
 		for (let i = 0, coords; coords = snake.coords[i]; i++) map[coords[1]][coords[0]] = 11
 	}
-
+*/
 	let nextMoveString = nextMove();
 
 	// Response data
