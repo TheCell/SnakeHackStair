@@ -142,7 +142,7 @@ router.all('/:debug?/move', function(req, res) {
 		}
 
 		for (let i = 0, coords; coords = snake.coords[i]; i++) {
-			map[coords[1]][coords[0]] = 10
+      map[coords[1]][coords[0]] = 10
 
       // WAS 3
 			if (i < 10) {
@@ -168,9 +168,11 @@ router.all('/:debug?/move', function(req, res) {
             {
               continue;
             }
-            map[y][x] = Math.min(height + map[y][x], 10);
+            map[y][x] = Math.min(height + map[y][x], 9.9);
 					}
 				}
+      map[coords[1]][coords[0]] = 10
+
 		}
 
 		// calc height map
