@@ -17,6 +17,8 @@ const printMap = _ => {
 		}
 		out += "\n"
 	}
+
+  console.log(out);
 }
 
 const _directions = {
@@ -53,12 +55,12 @@ router.all('/:debug?/start', function(req, res) {
 
 		resetMap()
 
-		console.log("settings.setup", settings.setup);
-		console.log("settings.width", settings.width);
-		console.log("settings.smallWidth", settings.smallWidth);
-		console.log("settings.height", settings.height);
-		console.log("settings.smallHeight", settings.smallHeight);
-		console.log("settings.game_id", settings.game_id);
+		//console.log("settings.setup", settings.setup);
+		//console.log("settings.width", settings.width);
+		//console.log("settings.smallWidth", settings.smallWidth);
+		//console.log("settings.height", settings.height);
+		//console.log("settings.smallHeight", settings.smallHeight);
+		//console.log("settings.game_id", settings.game_id);
 	}
 
 	// our values
@@ -67,7 +69,7 @@ router.all('/:debug?/start', function(req, res) {
 			color: "#42f47d",
 			name: "Beemo",
 			head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
-			taunt: "Outta my way!"
+			taunt: "Beep Boop!"
 		}
 	} else {
 		var data = {
