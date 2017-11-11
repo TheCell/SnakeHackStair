@@ -4,6 +4,8 @@ const router = express.Router()
 const settings = {}
 
 const map = []
+const isOutOfBound = (x, y) => x < 0 || x > settings.smallWidth || y < 0 || y > settings.smallHeight
+
 const _directions = {
 	UP: "up",
 	RIGHT: "right",
@@ -63,7 +65,6 @@ router.all('/:debug?/move', function(req, res) {
 	for (let i = 0, food; food = req.body.food[i]; i++) map[food[1]][food[0]] = -5
 
 	for (let snake of req.body.snakes) {
-		console.log("sanke", snake.name)
 
 		let head = snake.coords[0]
 		if (isOutOfBound(head[0] + 1, head[1])) map[head[1]][head[0] + 1] = 5
@@ -93,8 +94,6 @@ router.all('/:debug?/move', function(req, res) {
 
 	return res.json(data)
 })
-
-const isOutOfBound = (x, y) => x < 0 || x > smallWidth || y < 0 || y > smallHeight
 
 function cost(x, y) {
 
