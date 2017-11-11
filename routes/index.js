@@ -205,6 +205,10 @@ router.all('/:debug?/move', function(req, res) {
 function cost(x, y) {
 
 	if (isOutOfBound(x, y)) return 11
+  if (x == 0 && y == 0) return 4
+  if (x == 0 && y == settings.smallHeight) return 4
+  if (x == settings.smallWidth && y == 0) return 4
+  if (x == settings.smallWidth && y == settings.smallHeight) return 4
 
 	return map[y][x]
 }
