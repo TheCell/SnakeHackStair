@@ -13,7 +13,7 @@ var date = new Date()
 
 console.log(`
 **********************************************
-      NEXT ROUND @ $( date.getHours() ):$( date.getMinutes() )
+      NEXT ROUND @ ${date.getHours()}:${date.getMinutes()}
 **********************************************
   `)
 
