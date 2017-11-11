@@ -91,29 +91,17 @@ router.all('/:debug?/move', function(req, res) {
 	for (let snake of req.body.snakes) {
 
 		let head = snake.coords[0]
-		console.log(head)
-		if (!isOutOfBound(head[0] + 1, head[1]))
-    {
-      console.log("head", head[0] + 1, head[1]); // map[head[1]][head[0] + 1] = 5
-    }
-		else
-    {
-      console.log("no head");
-    }
-		/*
-						if (isOutOfBound(head[0] - 1, head[1])) map[head[1]][head[0] - 1] = 5
-						if (isOutOfBound(head[0], head[1] + 1)) map[head[1] + 1][head[0]] = 5
-						if (isOutOfBound(head[0], head[1] - 1)) map[head[1] - 1][head[0]] = 5
-				*/
-		//for (let i = 0, coords; coords = snake.coords[i]; i++) map[coords[1]][coords[0]] = 10
+		if (!isOutOfBound(head[0] + 1, head[1])) map[head[1]][head[0] + 1] = 5
+		if (isOutOfBound(head[0] - 1, head[1])) map[head[1]][head[0] - 1] = 5
+		if (isOutOfBound(head[0], head[1] + 1)) map[head[1] + 1][head[0]] = 5
+		if (isOutOfBound(head[0], head[1] - 1)) map[head[1] - 1][head[0]] = 5
+    for (let i = 0, coords; coords = snake.coords[i]; i++) map[coords[1]][coords[0]] = 10
 
 	}
 
-  /*
 	for (let snake of req.body.dead_snakes) {
 		for (let i = 0, coords; coords = snake.coords[i]; i++) map[coords[1]][coords[0]] = 10
 	}
-*/
 
 	let nextMoveString = nextMove();
 
@@ -139,23 +127,15 @@ function cost(x, y) {
 }
 
 function nextMove() {
-  console.log("nextMove start");
   // up, right, down, left
   let movementCost = [];
 
-  console.log("movementCost before cost calc", movementCost);
-  console.log("cost 0-3", cost(snakeHeadPos[0], snakeHeadPos[1] - 1));
-  console.log("cost 0-3", cost(snakeHeadPos[0] + 1, snakeHeadPos[1]));
-  console.log("cost 0-3", cost(snakeHeadPos[0], snakeHeadPos[1] + 1));
-  console.log("cost 0-3", cost(snakeHeadPos[0] - 1, snakeHeadPos[1]));
   movementCost[0] = cost(snakeHeadPos[0], snakeHeadPos[1] - 1);
   movementCost[1] = cost(snakeHeadPos[0] + 1, snakeHeadPos[1]);
   movementCost[2] = cost(snakeHeadPos[0], snakeHeadPos[1] + 1);
   movementCost[3] = cost(snakeHeadPos[0] - 1, snakeHeadPos[1]);
 
-  console.log("movementCost", movementCost);
   let minIndex = indexOfMin(movementCost);
-  console.log("movenext end: minIndex", minIndex);
 	return _directions[minIndex];
 }
 
