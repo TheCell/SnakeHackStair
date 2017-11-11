@@ -7,10 +7,10 @@ router.all('/start', function(req, res) {
 
 	// Response data
 	var data = {
-		color: "#DFFF00",
-		name: "Cage Snake",
-		head_url: "http://www.placecage.com/c/200/200", // optional, but encouraged!
-		taunt: "Let's do thisss thang!", // optional, but encouraged!
+		color: "#f46b42",
+		name: "Beemo",
+		head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
+		taunt: "Outta my way!", // optional, but encouraged!
 	}
 
 	return res.json(data)
