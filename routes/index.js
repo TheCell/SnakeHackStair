@@ -55,9 +55,9 @@ router.all('/:debug?/move', function(req, res) {
 	// update map
 	resetMap()
 
-	//for (let i = 0, food; food = res.body.food[i]; i++) map[food[0]][food[1]] = -5
+	for (let i = 0, food; food = req.body.food[i]; i++) map[food[0]][food[1]] = -5
 	/*
-		for (let i = 0, snake; snake = res.body.snakes[i]; i++) {
+		for (let i = 0, snake; snake = req.body.snakes[i]; i++) {
 
 			let head = snake.coords[0]
 			if (isOutOfBound(head[0] + 1, head[1])) map[head[0] + 1][head[1]] = 5
@@ -69,7 +69,7 @@ router.all('/:debug?/move', function(req, res) {
 
 		}
 
-		for (let i = 0, snake; snake = res.body.dead_snakes[i]; i++) {
+		for (let i = 0, snake; snake = req.body.dead_snakes[i]; i++) {
 			for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[0]][coords[1]] = 10
 		}
 	*/
