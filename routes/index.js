@@ -19,20 +19,22 @@ const snakeHeadPos = [0, 0];
 */
 router.all('/:debug?/start', function(req, res) {
 
-	if (settings.setup) return
+	if (!settings.setup) {
 
-	// save init values
-	settings.setup = true
-	settings.width = req.body.width * 1
-	settings.smallWidth = settings.width - 1
-	settings.height = req.body.height * 1
-	settings.smallHeight = settings.height - 1
-	settings.game_id = req.body.game_id
+		// save init values
+		settings.setup = true
+		settings.width = req.body.width * 1
+		settings.smallWidth = settings.width - 1
+		settings.height = req.body.height * 1
+		settings.smallHeight = settings.height - 1
+		settings.game_id = req.body.game_id
 
-	// setup map
-	for (let y = 0; y < settings.height; y++) map.push(new Array(settings.width))
+		// setup map
+		for (let y = 0; y < settings.height; y++) map.push(new Array(settings.width))
 
-	resetMap()
+		resetMap()
+
+	}
 
 	// our values
 	const data = {
@@ -52,8 +54,8 @@ router.all('/:debug?/move', function(req, res) {
 
 	// update map
 	resetMap()
-	/*
-		for (let i = 0, food; food = res.body.food[i]; i++) map[food[0]][food[1]] = -5
+
+	for (let i = 0, food; food = res.body.food[i]; i++) map[food[0]][food[1]] = -5
 
 	for (let i = 0, food; food = res.body.food[i]; i++) map[food[0]][food[1]] = -5
 
@@ -72,7 +74,6 @@ router.all('/:debug?/move', function(req, res) {
 	for (let i = 0, snake; snake = res.body.dead_snakes[i]; i++) {
 		for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[0]][coords[1]] = 10
 	}
-*/
 
 	if (req.params.debug) console.log(map)
 
