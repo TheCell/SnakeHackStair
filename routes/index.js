@@ -160,6 +160,10 @@ router.all('/:debug?/move', function(req, res) {
             let height = mapFunction(cSquare, 0, maxDistance, 0, 90); // was 30
 
 						//map[y][x] = Math.max(height, map[y][x])
+            if (map[y][x] < -88)
+            {
+              continue;
+            }
             map[y][x] = height + map[y][x];
 					}
 				}
