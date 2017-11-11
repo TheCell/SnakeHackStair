@@ -57,16 +57,19 @@ router.all('/:debug?/start', function(req, res) {
 router.all('/:debug?/move', function(req, res) {
 	console.log("reqParam: ", req.params.debug);
 
-	if (req.params.debug) {
-		settings.debugSnakeId = req.body.you;
-		console.log("debugSnakeId", settings.debugSnakeId);
-		let snakesArr = req.body.snakes;
-		snakesArr.forEach(function(snake, index) {
-			if (snake.you == settings.debugSnakeId) {
-				updateSnakeHead()
-			}
-		});
-	}
+  if (req.params.debug)
+  {
+    settings.debugSnakeId = req.body.you;
+    console.log("debugSnakeId", settings.debugSnakeId);
+    let snakesArr = req.body.snakes;
+    snakesArr.forEach( function (snake, index)
+    {
+      if (snake.you == settings.debugSnakeId)
+      {
+        updateSnakeHead()
+      }
+    });
+  }
 
 	// update map
 	resetMap()
@@ -74,6 +77,7 @@ router.all('/:debug?/move', function(req, res) {
 	for (let i = 0, food; food = req.body.food[i]; i++) map[food[1]][food[0]] = -5
 
 	for (let snake of req.body.snakes) {
+		console.log("sanke", snake.name)
 
 		let head = snake.coords[0]
 		if (isOutOfBound(head[0] + 1, head[1])) map[head[1]][head[0] + 1] = 5
@@ -96,13 +100,17 @@ router.all('/:debug?/move', function(req, res) {
 		console.log("nextMove", nextMove());
 	}
 
+  let nextMoveString = nextMove();
+
 	const data = {
-		move: nextMove(), // one of: ['up','down','left','right']
+		move: nextMoveString, // one of: ['up','down','left','right']
 		taunt: 'Outta my way, snake!'
 	}
 
 	return res.json(data)
 })
+
+const isOutOfBound = (x, y) => x < 0 || x > smallWidth || y < 0 || y > smallHeight
 
 function cost(x, y) {
 
@@ -125,7 +133,7 @@ function nextMove() {
 }
 
 function updateSnakeHead(x, y) {
-	console.log("update snake head: ", x, y);
+  console.log("update snake head: ", x, y);
 	snakeHeadPos[0] = x;
 	snakeHeadPos[1] = y;
 }
