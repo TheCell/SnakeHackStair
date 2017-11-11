@@ -20,6 +20,8 @@ router.all('/:debug?/start', function(req, res) {
 	settings.height = req.body.height * 1
 	settings.game_id = req.body.game_id
 
+	console.log("width is", (typeof settings.width))
+
 	settings.debug = !!req.params.debug
 
 	// setup map
@@ -43,11 +45,7 @@ router.all('/:debug?/start', function(req, res) {
 */
 router.all('/debug?/move', function(req, res) {
 
-	for (let y = 0; y < height; y++) {
-		for (let x = 0; x < width; x++) {
-
-		}
-	}
+	resetMap()
 
 	//if (settings.debug) console.log(req.body)
 	//if (settings.debug) console.log(req.body.snakes[0].coords)
