@@ -41,7 +41,7 @@ const snakeHeadPos = [0, 0];
 */
 router.all('/:debug?/start', function(req, res) {
 
-	if (!settings.setup) {
+	if (settings.game_id != req.body.game_id) {
 
 		// save init values
 		settings.setup = true
