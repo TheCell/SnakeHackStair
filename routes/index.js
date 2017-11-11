@@ -17,7 +17,7 @@ router.all('/:debug?/start', function(req, res) {
 	settings.debug = !!req.params.debug
 
 	// setup map
-	for (let y = 0; i < height; i++) map.push(new Array(width))
+	for (let y = 0; i < settings.height; i++) map.push(new Array(settings.width))
 	resetMap()
 
 	if (settings.debug) console.log(map)
@@ -60,18 +60,17 @@ router.all('/debug?/move', function(req, res) {
 
 function cost(x, y) {
 
-	// if x < 0
-  if (x < 0) return 10;
-  if (y < 0) return 10;
-  if (x > settings.width -1) return 10;
-  if (y > settings.height -1) return 10;
+	if (x < 0) return 10;
+	if (y < 0) return 10;
+	if (x > settings.width - 1) return 10;
+	if (y > settings.height - 1) return 10;
 
 	return map[x][y]
 
 }
 
 function resetMap() {
-	for (let y = 0; y < height; y++) map[y].fill(0)
+	for (let y = 0; y < settings.height; y++) map[y].fill(0)
 }
 
 module.exports = router
