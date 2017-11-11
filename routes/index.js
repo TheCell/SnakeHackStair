@@ -73,9 +73,13 @@ router.all('/:debug?/move', function(req, res) {
 		for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[1]][coords[0]] = 10
 	}
 
-	if (req.params.debug) console.log(map)
-
 	// Response data
+  if (req.params.debug)
+  {
+     console.log(map)
+     console.log("nextMove", nextMove());
+  }
+
 	const data = {
 		move: nextMove(), // one of: ['up','down','left','right']
 		taunt: 'Outta my way, snake!'
