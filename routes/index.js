@@ -70,7 +70,7 @@ router.all('/:debug?/move', function(req, res) {
 
 	// movement
 	console.log(map)
-	console.log("stat", settings.debug)
+	console.log("stat", req.params.debug)
 
 	if (req.params.debug) console.log(map)
 
