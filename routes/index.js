@@ -130,6 +130,11 @@ router.all('/:debug?/move', function(req, res) {
     {
         map[coords[1]][coords[0]] = 10
 
+        if (i < 3)
+        {
+          continue;
+        }
+
         yLoop:
         for (let y = 0; y < settings.height; y++) {
           for (let x = 0; x < settings.width; x++) {
