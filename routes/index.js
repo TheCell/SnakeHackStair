@@ -4,6 +4,12 @@ const router = express.Router()
 const settings = {}
 
 const map = []
+const _directions = {
+  UP: "up",
+  RIGHT: "right",
+  BOTTOM: "bottom",
+  LEFT: "left"
+}
 
 /*
   Handle Game Start
