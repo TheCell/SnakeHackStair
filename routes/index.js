@@ -20,7 +20,7 @@ router.all('/:debug?/start', function(req, res) {
 	settings.height = req.body.height * 1
 	settings.game_id = req.body.game_id
 
-	console.log("width is", (typeof settings.width))
+	console.log("width is", (typeof req.body.width))
 
 	settings.debug = !!req.params.debug
 
