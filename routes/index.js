@@ -91,10 +91,19 @@ router.all('/:debug?/move', function(req, res) {
 	for (let snake of req.body.snakes) {
 
 		let head = snake.coords[0]
-		if (!isOutOfBound(head[0] + 1, head[1])) map[head[1]][head[0] + 1] = 5
-		if (isOutOfBound(head[0] - 1, head[1])) map[head[1]][head[0] - 1] = 5
-		if (isOutOfBound(head[0], head[1] + 1)) map[head[1] + 1][head[0]] = 5
-		if (isOutOfBound(head[0], head[1] - 1)) map[head[1] - 1][head[0]] = 5
+		if (!isOutOfBound(head[0] + 1, head[1])) {
+     map[head[1]][head[0] + 1] = 5
+    }
+		if (!isOutOfBound(head[0] - 1, head[1])) {
+     map[head[1]][head[0] - 1] = 5
+    }
+		if (!isOutOfBound(head[0], head[1] + 1)) {
+     map[head[1] + 1][head[0]] = 5
+    }
+		if (!isOutOfBound(head[0], head[1] - 1)) {
+     map[head[1] - 1][head[0]] = 5
+    }
+
     for (let i = 0, coords; coords = snake.coords[i]; i++) map[coords[1]][coords[0]] = 10
 
 	}
