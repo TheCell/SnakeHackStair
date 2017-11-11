@@ -9,12 +9,12 @@ var logger = require('morgan')
 var app = express()
 var routes = require('./routes')
 
+var date = new Date()
 
 console.log(`
-****************************************
-      NEXT ROUND
-****************************************
-
+**********************************************
+      NEXT ROUND @ $( date.getHours() ):$( date.getMinutes() )
+**********************************************
   `)
 
 // For deployment to Heroku, the port needs to be set using ENV, so

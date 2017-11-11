@@ -11,16 +11,16 @@ router.all('/:debug?/start', function(req, res) {
 	settings.height = req.body.height
 	settings.game_id = req.body.game_id
 
-	settings.debug = req.params.debug
+	settings.debug = !!req.params.debug
 
 	if (settings.debug) console.log(settings)
 
 	// our values
 	const data = {
 		color: "#f46b42",
-    name: "Beemo",
-    head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
-    taunt: "Outta my way!"
+		name: "Beemo",
+		head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
+		taunt: "Outta my way!"
 	}
 
 	return res.json(data)
@@ -29,9 +29,9 @@ router.all('/:debug?/start', function(req, res) {
 /*
   Handle Game Loop
 */
-router.all('/:debug?/move', function(req, res) {
+router.all('/debug?/move', function(req, res) {
 
-  if (settings.debug) console.log(req.body)
+	if (settings.debug) console.log(req.body)
 
 	// Response data
 	const data = {
