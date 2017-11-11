@@ -144,7 +144,8 @@ router.all('/:debug?/move', function(req, res) {
 		for (let i = 0, coords; coords = snake.coords[i]; i++) {
 			map[coords[1]][coords[0]] = 10
 
-			if (i < 3) {
+      // WAS 3
+			if (i < 10) {
 				continue;
 			}
 
