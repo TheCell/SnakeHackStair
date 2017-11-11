@@ -55,14 +55,13 @@ router.all('/:debug?/start', function(req, res) {
   Handle Game Loop
 */
 router.all('/:debug?/move', function(req, res) {
-	console.log("reqParam: ", req.params.debug);
 
 	if (req.params.debug) {
 		settings.debugSnakeId = req.body.you;
 		console.log("debugSnakeId", settings.debugSnakeId);
 		let snakesArr = req.body.snakes;
 		snakesArr.forEach(function(snake, index) {
-			if (snake.you == settings.debugSnakeId) {
+			if (snake.id == settings.debugSnakeId) {
 				updateSnakeHead()
 			}
 		});
@@ -74,7 +73,7 @@ router.all('/:debug?/move', function(req, res) {
 	for (let i = 0, food; food = req.body.food[i]; i++) map[food[1]][food[0]] = -5
 
 	for (let snake of req.body.snakes) {
-		console.log("sanke", snake.name)
+		console.log("snake", snake.id)
 
 		let head = snake.coords[0]
 		if (isOutOfBound(head[0] + 1, head[1])) map[head[1]][head[0] + 1] = 5
