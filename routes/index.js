@@ -76,7 +76,8 @@ router.all('/:debug?/move', function(req, res) {
 
 		let head = snake.coords[0]
 
-		if (isOutOfBound(head[0] + 1, head[1])) map[head[1]][head[0] + 1] = 5
+		if (isOutOfBound(head[0] + 1, head[1])) console.log("head", head[0] + 1, head[1]) // map[head[1]][head[0] + 1] = 5
+		else console.log("no head")
 		/*
 						if (isOutOfBound(head[0] - 1, head[1])) map[head[1]][head[0] - 1] = 5
 						if (isOutOfBound(head[0], head[1] + 1)) map[head[1] + 1][head[0]] = 5
