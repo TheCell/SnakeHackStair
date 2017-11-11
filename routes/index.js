@@ -144,14 +144,14 @@ function nextMove() {
   let movementCost = [];
 
   console.log("movementCost before cost calc", movementCost);
-  console.log("cost 0-3", cost(snakeHeadPos.x, snakeHeadPos.y - 1));
-  console.log("cost 0-3", cost(snakeHeadPos.x + 1, snakeHeadPos.y));
-  console.log("cost 0-3", cost(snakeHeadPos.x, snakeHeadPos.y + 1));
-  console.log("cost 0-3", cost(snakeHeadPos.x - 1, snakeHeadPos.y));
-  movementCost[0] = cost(snakeHeadPos.x, snakeHeadPos.y - 1);
-  movementCost[1] = cost(snakeHeadPos.x + 1, snakeHeadPos.y);
-  movementCost[2] = cost(snakeHeadPos.x, snakeHeadPos.y + 1);
-  movementCost[3] = cost(snakeHeadPos.x - 1, snakeHeadPos.y);
+  console.log("cost 0-3", cost(snakeHeadPos[0], snakeHeadPos[1] - 1));
+  console.log("cost 0-3", cost(snakeHeadPos[0] + 1, snakeHeadPos[1]));
+  console.log("cost 0-3", cost(snakeHeadPos[0], snakeHeadPos[1] + 1));
+  console.log("cost 0-3", cost(snakeHeadPos[0] - 1, snakeHeadPos[1]));
+  movementCost[0] = cost(snakeHeadPos[0], snakeHeadPos[1] - 1);
+  movementCost[1] = cost(snakeHeadPos[0] + 1, snakeHeadPos[1]);
+  movementCost[2] = cost(snakeHeadPos[0], snakeHeadPos[1] + 1);
+  movementCost[3] = cost(snakeHeadPos[0] - 1, snakeHeadPos[1]);
 
   console.log("movementCost", movementCost);
   let minIndex = indexOfMin(movementCost);
