@@ -143,6 +143,11 @@ function nextMove() {
   // up, right, down, left
   let movementCost = [];
 
+  console.log("movementCost before cost calc", movementCost);
+  console.log("cost 0-3", cost(snakeHeadPos.x, snakeHeadPos.y - 1));
+  console.log("cost 0-3", cost(snakeHeadPos.x + 1, snakeHeadPos.y));
+  console.log("cost 0-3", cost(snakeHeadPos.x, snakeHeadPos.y + 1));
+  console.log("cost 0-3", cost(snakeHeadPos.x - 1, snakeHeadPos.y));
   movementCost[0] = cost(snakeHeadPos.x, snakeHeadPos.y - 1);
   movementCost[1] = cost(snakeHeadPos.x + 1, snakeHeadPos.y);
   movementCost[2] = cost(snakeHeadPos.x, snakeHeadPos.y + 1);
