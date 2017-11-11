@@ -93,13 +93,20 @@ router.all('/:debug?/move', function(req, res) {
 
 	for (let i = 0, food; food = req.body.food[i]; i++) {
 
-		// calc hight map
-		let cSquare = Math.pow(snakeHeadPos[0] - food[1], 2) + Math.pow(snakeHeadPos[1] - food[0], 2)
-		let maxDistance = settings.height * settings.height + settings.width * settings.width
-		let height = mapFunction(cSquare, 0, maxDistance, -30, 0)
+		for (let y = 0; y < settings.height; y++) {
+			for (let x = 0; x < settings.height; x++) {
 
-		map[food[1]][food[0]] = height
+				let cSquare = Math.pow(snakeHeadPos[0] - food[1], 2) + Math.pow(snakeHeadPos[1] - food[0], 2)
+				let maxDistance = settings.height * settings.height + settings.width * settings.width
+				let height = mapFunction(cSquare, 0, maxDistance, -30, 0) | 0
 
+				//
+				map[y][x] = Math.min(height, map[y][x])
+
+
+
+			}
+		}
 
 	}
 
