@@ -108,18 +108,20 @@ router.all('/:debug?/move', function(req, res) {
 	resetMap()
 
 	for (let i = 0, food; food = req.body.food[i]; i++) {
+    if ((food[0] > 0 || food[0] < settings.smallWidth) || (food[1] > 0 || food[1] < settings.smallHeight))
+    {
+  		for (let y = 0; y < settings.height; y++) {
+  			for (let x = 0; x < settings.width; x++) {
 
-		for (let y = 0; y < settings.height; y++) {
-			for (let x = 0; x < settings.width; x++) {
+  				let cSquare = Math.pow(x - food[0], 2) + Math.pow(y - food[1], 2)
+  				let maxDistance = settings.height * settings.height + settings.width * settings.width
+  				let height = mapFunction(cSquare, 0, maxDistance, -90, 0) // was -30
 
-				let cSquare = Math.pow(x - food[0], 2) + Math.pow(y - food[1], 2)
-				let maxDistance = settings.height * settings.height + settings.width * settings.width
-				let height = mapFunction(cSquare, 0, maxDistance, -90, 0) // was -30
+  				map[y][x] = Math.min(height, map[y][x])
 
-				map[y][x] = Math.min(height, map[y][x])
-
-			}
-		}
+  			}
+  		}
+    }
 
 	}
 
