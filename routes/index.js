@@ -108,7 +108,7 @@ router.all('/:debug?/move', function(req, res) {
 	resetMap()
 
 	for (let i = 0, food; food = req.body.food[i]; i++) {
-    if ((food[0] > 0 || food[0] < settings.smallWidth) || (food[1] > 0 || food[1] < settings.smallHeight))
+    if ((food[0] > 0 || food[0] < settings.smallWidth) && (food[1] > 0 || food[1] < settings.smallHeight))
     {
   		for (let y = 0; y < settings.height; y++) {
   			for (let x = 0; x < settings.width; x++) {
