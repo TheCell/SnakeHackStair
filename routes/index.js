@@ -13,7 +13,11 @@ const _directions = {
 	UP: "up",
 	RIGHT: "right",
 	BOTTOM: "bottom",
-	LEFT: "left"
+	LEFT: "left",
+  0: "up",
+  1: "right",
+  2: "bottom",
+  3: "left"
 }
 
 // x, y
