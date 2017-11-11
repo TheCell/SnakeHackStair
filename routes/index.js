@@ -53,46 +53,46 @@ router.all('/:debug?/start', function(req, res) {
 router.all('/:debug?/move', function(req, res) {
 	console.log(req.params.debug)
 
-  if (req.params.debug)
-  {
-    settings.debugSnakeId = req.body.you;
-    console.log("debugSnakeId", settings.debugSnakeId);
-  }
+	if (req.params.debug) {
+		settings.debugSnakeId = req.body.you;
+		console.log("debugSnakeId", settings.debugSnakeId);
+	}
 
 	// update map
 	resetMap()
 
 	for (let i = 0, food; food = req.body.food[i]; i++) map[food[1]][food[0]] = -5
 
-	for (let snake of req.body.snakes) {
+	for (let snake of req.body.snakes)
+		console.log("sanke", snake.name)
+	/*
+			let head = snake.coords[0]
+			if (isOutOfBound(head[0] + 1, head[1])) map[head[1]][head[0] + 1] = 5
+			if (isOutOfBound(head[0] - 1, head[1])) map[head[1]][head[0] - 1] = 5
+			if (isOutOfBound(head[0], head[1] + 1)) map[head[1] + 1][head[0]] = 5
+			if (isOutOfBound(head[0], head[1] - 1)) map[head[1] - 1][head[0]] = 5
 
-		let head = snake.coords[0]
-		if (isOutOfBound(head[0] + 1, head[1])) map[head[1]][head[0] + 1] = 5
-		if (isOutOfBound(head[0] - 1, head[1])) map[head[1]][head[0] - 1] = 5
-		if (isOutOfBound(head[0], head[1] + 1)) map[head[1] + 1][head[0]] = 5
-		if (isOutOfBound(head[0], head[1] - 1)) map[head[1] - 1][head[0]] = 5
+			for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[1]][coords[0]] = 10
+	*/
+}
 
-		for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[1]][coords[0]] = 10
-
-	}
-
-	for (let snake of req.body.dead_snakes) {
-		for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[1]][coords[0]] = 10
-	}
+for (let snake of req.body.dead_snakes) {
+	//	for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[1]][coords[0]] = 10
+}
 
 
-	// Response data
-	if (req.params.debug) {
-		console.log(map)
-		console.log("nextMove", nextMove());
-	}
+// Response data
+if (req.params.debug) {
+	console.log(map)
+	console.log("nextMove", nextMove());
+}
 
-	const data = {
-		move: nextMove(), // one of: ['up','down','left','right']
-		taunt: 'Outta my way, snake!'
-	}
+const data = {
+	move: nextMove(), // one of: ['up','down','left','right']
+	taunt: 'Outta my way, snake!'
+}
 
-	return res.json(data)
+return res.json(data)
 })
 
 const isOutOfBound = (x, y) => x < 0 || x > smallWidth || y < 0 || y > smallHeight
