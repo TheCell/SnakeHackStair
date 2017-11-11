@@ -51,7 +51,6 @@ router.all('/:debug?/start', function(req, res) {
   Handle Game Loop
 */
 router.all('/:debug?/move', function(req, res) {
-	console.log(req.params.debug)
 
 	if (req.params.debug) {
 		settings.debugSnakeId = req.body.you;
@@ -73,26 +72,26 @@ router.all('/:debug?/move', function(req, res) {
 			if (isOutOfBound(head[0], head[1] - 1)) map[head[1] - 1][head[0]] = 5
 
 			for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[1]][coords[0]] = 10
-	*/
-}
 
-for (let snake of req.body.dead_snakes) {
-	//	for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[1]][coords[0]] = 10
-}
+}*/
+
+	for (let snake of req.body.dead_snakes) {
+		//	for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[1]][coords[0]] = 10
+	}
 
 
-// Response data
-if (req.params.debug) {
-	console.log(map)
-	console.log("nextMove", nextMove());
-}
+	// Response data
+	if (req.params.debug) {
+		console.log(map)
+		console.log("nextMove", nextMove());
+	}
 
-const data = {
-	move: nextMove(), // one of: ['up','down','left','right']
-	taunt: 'Outta my way, snake!'
-}
+	const data = {
+		move: nextMove(), // one of: ['up','down','left','right']
+		taunt: 'Outta my way, snake!'
+	}
 
-return res.json(data)
+	return res.json(data)
 })
 
 const isOutOfBound = (x, y) => x < 0 || x > smallWidth || y < 0 || y > smallHeight
