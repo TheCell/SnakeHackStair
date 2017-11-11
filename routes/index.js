@@ -18,7 +18,11 @@ const snakeHeadPos = [0, 0];
   Handle Game Start
 */
 router.all('/:debug?/start', function(req, res) {
+
+	if (settings.setup) return
+
 	// save init values
+	settings.setup = true
 	settings.width = req.body.width * 1
 	settings.smallWidth = settings.width - 1
 	settings.height = req.body.height * 1
@@ -46,8 +50,6 @@ router.all('/:debug?/start', function(req, res) {
 */
 router.all('/:debug?/move', function(req, res) {
 
-	console.log(req.body)
-
 	// update map
 	resetMap()
 	/*
@@ -71,10 +73,6 @@ router.all('/:debug?/move', function(req, res) {
 		for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[0]][coords[1]] = 10
 	}
 */
-
-	// movement
-	//console.log(map)
-	console.log("stat", req.params.debug)
 
 	if (req.params.debug) console.log(map)
 
