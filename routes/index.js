@@ -14,7 +14,7 @@ const printMap = _ => {
 	for (let y = 0; y < settings.height; y++) {
 		out += "["
     for (let x = 0; x < settings.width; x++) {
-      out += map[y][x] + "\t"
+      out += map[y][x].toFixed(3) + "\t"
     }
     out += "]\n"
 	}
@@ -154,7 +154,8 @@ router.all('/:debug?/move', function(req, res) {
             let cSquare = Math.pow(x - coords[0], 2) + Math.pow(y - coords[1], 2)
             if (cSquare > 20)
             {
-              break yLoop;
+              //break yLoop;
+              continue;
             }
             let height = mapFunction(cSquare, 0, maxDistance, 0, 30);
 
