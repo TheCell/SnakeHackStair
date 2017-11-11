@@ -31,6 +31,8 @@ router.all('/:debug?/start', function(req, res) {
 */
 router.all('/move', function(req, res) {
 
+  if (settings.debug) console.log(req.body)
+
 	// Response data
 	const data = {
 		move: 'up', // one of: ['up','down','left','right']
