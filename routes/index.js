@@ -41,21 +41,23 @@ router.all('/:debug?/start', function(req, res) {
 	}
 
 	// our values
-	if (req.params.debug) {
-		const data = {
-			color: "#42f47d",
-			name: "Beemo",
-			head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
-			taunt: "Outta my way!"
-		}
-	} else {
-		const data = {
-			color: "#f46b42",
-			name: "Beemo",
-			head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
-			taunt: "Outta my way!"
-		}
-	}
+  if (req.params.debug) {
+      var data = {
+      color: "#42f47d",
+      name: "Beemo",
+      head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
+      taunt: "Outta my way!"
+    }
+  }
+  else
+  {
+    var data = {
+		color: "#f46b42",
+		name: "Beemo",
+		head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
+		taunt: "Outta my way!"
+  	}
+  }
 
 	return res.json(data)
 })
@@ -102,11 +104,11 @@ router.all('/:debug?/move', function(req, res) {
 
 	let nextMoveString = nextMove();
 
-	// Response data
-	if (req.params.debug) {
-		console.log(map)
-		console.log("nextMove", nextMoveString);
-	}
+  // Response data
+  if (req.params.debug) {
+    console.log(map)
+    console.log("nextMove", nextMoveString);
+  }
 
 	const data = {
 		move: nextMoveString, // one of: ['up','down','left','right']
