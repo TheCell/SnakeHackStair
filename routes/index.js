@@ -11,7 +11,9 @@ router.all('/:debug?/start', function(req, res) {
 	settings.height = req.body.height
 	settings.game_id = req.body.game_id
 
-	if (req.params.debug) console.log(settings)
+	settings.debug = req.params.debug
+
+	if (settings.debug) console.log(settings)
 
 	// our values
 	const data = {
