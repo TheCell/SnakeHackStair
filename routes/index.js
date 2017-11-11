@@ -98,9 +98,9 @@ router.all('/:debug?/move', function(req, res) {
 
 				let cSquare = Math.pow(x - food[0], 2) + Math.pow(y - food[1], 2)
 				let maxDistance = settings.height * settings.height + settings.width * settings.width
-				//let height = mapFunction(cSquare, 0, maxDistance, -30, 0)
+				let height = mapFunction(cSquare, 0, maxDistance, -30, 0)
 
-				map[y][x] = Math.min(-cSquare, map[y][x])
+				map[y][x] = Math.min(height, map[y][x])
 
 			}
 		}
