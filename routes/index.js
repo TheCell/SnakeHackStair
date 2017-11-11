@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const settings = {}
+const map = []
 /*
   Handle Game Start
 */
@@ -12,6 +13,13 @@ router.all('/:debug?/start', function(req, res) {
 	settings.game_id = req.body.game_id
 
 	settings.debug = !!req.params.debug
+
+	// setup
+	for (let x = 0; x < width; x++) {
+		let row = []
+		for (let y = 0; y < height; y++) row.push(0)
+		map.push(row)
+	}
 
 	if (settings.debug) console.log(settings)
 
@@ -31,7 +39,7 @@ router.all('/:debug?/start', function(req, res) {
 */
 router.all('/debug?/move', function(req, res) {
 
-  if (settings.debug) console.log(req.body)
+	if (settings.debug) console.log(req.body)
 	if (settings.debug) console.log(req.body.snakes[0].coords)
 
 	// Response data
@@ -42,5 +50,14 @@ router.all('/debug?/move', function(req, res) {
 
 	return res.json(data)
 })
+
+function cost(x, y) {
+
+	// if x < 0
+
+
+	return map[x][y]
+
+}
 
 module.exports = router
