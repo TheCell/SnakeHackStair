@@ -27,7 +27,6 @@ router.all('/:debug?/start', function(req, res) {
 
 	// setup map
 	for (let y = 0; y < settings.height; y++) map.push(new Array(settings.width))
-
 	resetMap()
 
 	// our values
@@ -50,8 +49,6 @@ router.all('/:debug?/move', function(req, res) {
 
 	// update map
 	resetMap()
-	/*
-		for (let i = 0, food; food = res.body.food[i]; i++) map[food[0]][food[1]] = -5
 
 	for (let i = 0, food; food = res.body.food[i]; i++) map[food[0]][food[1]] = -5
 
@@ -67,15 +64,19 @@ router.all('/:debug?/move', function(req, res) {
 
 	}
 
+<<<<<<< HEAD
 	for (let i = 0, snake; snake = res.body.dead_snakes[i]; i++) {
 		for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[0]][coords[1]] = 10
 	}
-
-
+=======
 	// movement
 	console.log(map)
 	console.log("stat", req.params.debug)
+>>>>>>> 9c0ae3b4cbb2b14b935b5a43f4b9ce2df0c3e2c9
 
+
+	// movement
+	if (req.params.debug) console.log("*********************************************************")
 	if (req.params.debug) console.log(map)
 
 	// Response data
