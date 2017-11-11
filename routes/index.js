@@ -17,10 +17,10 @@ const _directions = {
 router.all('/:debug?/start', function(req, res) {
 	// save init values
 	settings.width = req.body.width * 1
+	settings.smallWidth = settings.width - 1
 	settings.height = req.body.height * 1
+	settings.smallHeight = settings.height - 1
 	settings.game_id = req.body.game_id
-
-	console.log("width is", (typeof req.body.width))
 
 	settings.debug = !!req.params.debug
 
@@ -45,10 +45,32 @@ router.all('/:debug?/start', function(req, res) {
 */
 router.all('/debug?/move', function(req, res) {
 
+	// update map
 	resetMap()
 
-	//if (settings.debug) console.log(req.body)
-	//if (settings.debug) console.log(req.body.snakes[0].coords)
+	for (let i = 0, food; food = res.body.food[i]; i++) map[food[0]][food[1]] = -5
+
+	for (let i = 0, snake; snake = res.body.snakes[i]; i++) {
+
+		let head = snake.coords[0]
+		if (isOutOfBound(head[0] + 1, head[1])) map[head[0] + 1][head[1]] = 5
+		if (isOutOfBound(head[0] - 1, head[1])) map[head[0] - 1][head[1]] = 5
+		if (isOutOfBound(head[0], head[1] + 1)) map[head[0]][head[1] + 1] = 5
+		if (isOutOfBound(head[0], head[1] - 1)) map[head[0]][head[1] - 1] = 5
+
+		for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[0]][coords[1]] = 10
+
+	}
+
+	for (let i = 0, snake; snake = res.body.dead_snakes[i]; i++) {
+		for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[0]][coords[1]] = 10
+	}
+
+
+	// movement
+
+
+	if (settings.debug) console.log(map)
 
 	// Response data
 	const data = {
@@ -59,12 +81,11 @@ router.all('/debug?/move', function(req, res) {
 	return res.json(data)
 })
 
+const isOutOfBound = (x, y) => x < 0 || x > smallWidth || y < 0 || y > smallHeight
+
 function cost(x, y) {
 
-	if (x < 0) return 10;
-	if (y < 0) return 10;
-	if (x > settings.width - 1) return 10;
-	if (y > settings.height - 1) return 10;
+	if (isOutOfBound(x, y)) return 10
 
 	return map[x][y]
 
