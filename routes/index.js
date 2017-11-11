@@ -25,8 +25,6 @@ router.all('/:debug?/start', function(req, res) {
 	settings.smallHeight = settings.height - 1
 	settings.game_id = req.body.game_id
 
-	settings.debug = !!req.params.debug
-
 	// setup map
 	for (let y = 0; y < settings.height; y++) map.push(new Array(settings.width))
 
@@ -46,7 +44,7 @@ router.all('/:debug?/start', function(req, res) {
 /*
   Handle Game Loop
 */
-router.all('/debug?/move', function(req, res) {
+router.all('/:debug?/move', function(req, res) {
 
 	// update map
 	resetMap()
@@ -74,7 +72,7 @@ router.all('/debug?/move', function(req, res) {
 	console.log(map)
 	console.log("stat", settings.debug)
 
-	if (settings.debug) console.log(map)
+	if (req.params.debug) console.log(map)
 
 	// Response data
 	const data = {
