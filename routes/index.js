@@ -1,29 +1,38 @@
-var express = require('express')
-var router = express.Router()
+const express = require('express')
+const router = express.Router()
 
-// Handle POST request to '/start'
-router.all('/start', function(req, res) {
-	// NOTE: Do something here to start the game
+const settings = {}
+/*
+  Handle Game Start
+*/
+router.all('/:debug?/start', function(req, res) {
+	// save init values
+	settings.width = req.body.width
+	settings.height = req.body.height
+	settings.game_id = req.body.game_id
 
-	// Response data
-	var data = {
+	if (req.params.debug) console.log(settings)
+
+	// our values
+	const data = {
 		color: "#f46b42",
-		name: "Beemo",
-		head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
-		taunt: "Outta my way!", // optional, but encouraged!
+    name: "Beemo",
+    head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
+    taunt: "Outta my way!"
 	}
 
 	return res.json(data)
 })
 
-// Handle POST request to '/move'
+/*
+  Handle Game Loop
+*/
 router.all('/move', function(req, res) {
-	// NOTE: Do something here to generate your move
 
 	// Response data
-	var data = {
+	const data = {
 		move: 'up', // one of: ['up','down','left','right']
-		taunt: 'Outta my way, snake!', // optional, but encouraged!
+		taunt: 'Outta my way, snake!'
 	}
 
 	return res.json(data)
