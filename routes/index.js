@@ -168,7 +168,7 @@ router.all('/:debug?/move', function(req, res) {
             {
               continue;
             }
-            map[y][x] = Math.max(height + map[y][x], 10);
+            map[y][x] = Math.min(height + map[y][x], 10);
 					}
 				}
 		}
