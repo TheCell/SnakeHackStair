@@ -11,7 +11,7 @@ const isOutOfBound = (x, y) => x < 0 || x > settings.smallWidth || y < 0 || y > 
 const mapFunction = (s, a1, a2, b1, b2) => b1 + (s - a1) * (b2 - b1) / (a2 - a1)
 const printMap = _ => {
 	let out = ""
-	for (let y = 0; y < settings.heigh; y++) {
+	for (let y = 0; y < settings.height; y++) {
 		for (let x = 0; x < settings.width; x++) {
 			out += map[y][x] + " "
 		}
@@ -155,7 +155,7 @@ router.all('/:debug?/move', function(req, res) {
             {
               break yLoop;
             }
-            let height = mapFunction(cSquare, 0, maxDistance, 3, 0)
+            let height = mapFunction(cSquare, 0, maxDistance, 5, 0)
 
 						map[y][x] = Math.max(height, map[y][x])
 
