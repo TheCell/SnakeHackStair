@@ -110,7 +110,7 @@ router.all('/:debug?/move', function(req, res) {
 
 				let cSquare = Math.pow(x - food[0], 2) + Math.pow(y - food[1], 2)
 				let maxDistance = settings.height * settings.height + settings.width * settings.width
-				let height = mapFunction(cSquare, 0, maxDistance, -100, 0) // was -30
+				let height = mapFunction(cSquare, 0, maxDistance, -90, 0) // was -30
 
 				map[y][x] = Math.min(height, map[y][x])
 
@@ -157,7 +157,7 @@ router.all('/:debug?/move', function(req, res) {
               //break yLoop;
               continue;
             }
-            let height = mapFunction(cSquare, 0, maxDistance, 0, 30);
+            let height = mapFunction(cSquare, 0, maxDistance, 0, 90); // was 30
 
 						//map[y][x] = Math.max(height, map[y][x])
             map[y][x] = height + map[y][x];
