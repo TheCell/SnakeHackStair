@@ -51,8 +51,6 @@ router.all('/:debug?/start', function(req, res) {
   Handle Game Loop
 */
 router.all('/:debug?/move', function(req, res) {
-	console.log("reqParam: ", req.params.debug);
-
   if (req.params.debug)
   {
     settings.debugSnakeId = req.body.you;
@@ -96,8 +94,10 @@ router.all('/:debug?/move', function(req, res) {
 		console.log("nextMove", nextMove());
 	}
 
+  let nextMoveString = nextMove();
+
 	const data = {
-		move: nextMove(), // one of: ['up','down','left','right']
+		move: nextMoveString, // one of: ['up','down','left','right']
 		taunt: 'Outta my way, snake!'
 	}
 
