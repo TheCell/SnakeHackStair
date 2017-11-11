@@ -140,7 +140,7 @@ router.all('/:debug?/move', function(req, res) {
           for (let x = 0; x < settings.width; x++) {
 
             let cSquare = Math.pow(x - coords[0], 2) + Math.pow(y - coords[1], 2)
-            if (cSquare > 200)
+            if (cSquare > 20)
             {
               break yLoop;
             }
@@ -165,7 +165,7 @@ router.all('/:debug?/move', function(req, res) {
 
 	// Response data
 	if (req.params.debug) {
-		console.log(map)
+		console.table(map);
 		//console.log("nextMove", nextMoveString);
 	}
 
