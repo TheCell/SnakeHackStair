@@ -42,7 +42,7 @@ router.all('/:debug?/start', function(req, res) {
 
 	// our values
   if (req.params.debug) {
-      const data = {
+      var data = {
       color: "#42f47d",
       name: "Beemo",
       head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
@@ -51,11 +51,11 @@ router.all('/:debug?/start', function(req, res) {
   }
   else
   {
-  	const data = {
-  		color: "#f46b42",
-  		name: "Beemo",
-  		head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
-  		taunt: "Outta my way!"
+    var data = {
+		color: "#f46b42",
+		name: "Beemo",
+		head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
+		taunt: "Outta my way!"
   	}
   }
 
