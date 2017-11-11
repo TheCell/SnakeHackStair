@@ -190,7 +190,7 @@ router.all('/:debug?/move', function(req, res) {
 
 	// Response data
 	if (req.params.debug) {
-		printMap();
+		//printMap();
 		//console.log("nextMove", nextMoveString);
 	}
 
