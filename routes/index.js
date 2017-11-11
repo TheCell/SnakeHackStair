@@ -9,6 +9,15 @@ const map = []
 
 const isOutOfBound = (x, y) => x < 0 || x > settings.smallWidth || y < 0 || y > settings.smallHeight
 const mapFunction = (s, a1, a2, b1, b2) => b1 + (s - a1) * (b2 - b1) / (a2 - a1)
+const printMap = _ => {
+	let out = ""
+	for (let y = 0; y < settings.heigh; y++) {
+		for (let x = 0; x < settings.width; x++) {
+			out += map[y][x] + " "
+		}
+		out += "\n"
+	}
+}
 
 const _directions = {
 	UP: "up",
@@ -126,14 +135,12 @@ router.all('/:debug?/move', function(req, res) {
 			}
 		}
 
-		for (let i = 0, coords; coords = snake.coords[i]; i++)
-    {
-        map[coords[1]][coords[0]] = 10
+		for (let i = 0, coords; coords = snake.coords[i]; i++) {
+			map[coords[1]][coords[0]] = 10
 
-        if (i < 3)
-        {
-          continue;
-        }
+			if (i < 3) {
+				continue;
+			}
 
         let maxDistance = settings.height * settings.height + settings.width * settings.width;
 
@@ -148,11 +155,11 @@ router.all('/:debug?/move', function(req, res) {
             }
             let height = mapFunction(cSquare, 0, maxDistance, 3, 0)
 
-            map[y][x] = Math.max(height, map[y][x])
+						map[y][x] = Math.max(height, map[y][x])
 
-          }
-        }
-    }
+					}
+				}
+		}
 
 		// calc height map
 
@@ -166,7 +173,7 @@ router.all('/:debug?/move', function(req, res) {
 
 	// Response data
 	if (req.params.debug) {
-		console.table(map);
+		printMap();
 		//console.log("nextMove", nextMoveString);
 	}
 
@@ -220,14 +227,14 @@ function setPointAndHeight(xPoint, yPoint, height)
       let cSquare = Math.pow(x - xPoint, 2) + Math.pow(y - yPoint, 2)
       let height = mapFunction(cSquare, 0, maxDistance, -30, 0)
 
-      map[y][x] = Math.min(height, map[y][x])
+			map[y][x] = Math.min(height, map[y][x])
 
-    }
-  }
+		}
+	}
 }
 
 function lerp(v0, v1, t) {
-  return v0*(1-t)+v1*t
+	return v0 * (1 - t) + v1 * t
 }
 
 function indexOfMin(arr) {
