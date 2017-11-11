@@ -53,6 +53,12 @@ router.all('/:debug?/start', function(req, res) {
 router.all('/:debug?/move', function(req, res) {
 	console.log(req.params.debug)
 
+  if (req.params.debug)
+  {
+    settings.debugSnakeId = req.body.you;
+    console.log("debugSnakeId", settings.debugSnakeId);
+  }
+
 	// update map
 	resetMap()
 
