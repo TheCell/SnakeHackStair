@@ -55,7 +55,7 @@ router.all('/:debug?/move', function(req, res) {
 	// update map
 	resetMap()
 
-	for (let i = 0, food; food = res.body.food[i]; i++) map[food[0]][food[1]] = -5
+	//for (let i = 0, food; food = res.body.food[i]; i++) map[food[0]][food[1]] = -5
 	/*
 		for (let i = 0, snake; snake = res.body.snakes[i]; i++) {
 
