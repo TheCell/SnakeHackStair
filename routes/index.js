@@ -161,7 +161,7 @@ router.all('/:debug?/move', function(req, res) {
               //break yLoop;
               continue;
             }
-            let height = mapFunction(cSquare, 0, 20, 0, 20); // was 30
+            let height = mapFunction(cSquare, 0, 20, 0, 15); // was 30
 
 						//map[y][x] = Math.max(height, map[y][x])
             if (map[y][x] < -88)
