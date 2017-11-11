@@ -23,7 +23,7 @@ app.set('port', (process.env.PORT || 9001))
 
 app.enable('verbose errors')
 
-app.use(logger('dev'))
+//app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(routes)

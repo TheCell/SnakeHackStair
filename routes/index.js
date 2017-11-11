@@ -5,10 +5,10 @@ const settings = {}
 
 const map = []
 const _directions = {
-  UP: "up",
-  RIGHT: "right",
-  BOTTOM: "bottom",
-  LEFT: "left"
+	UP: "up",
+	RIGHT: "right",
+	BOTTOM: "bottom",
+	LEFT: "left"
 }
 
 /*
@@ -27,9 +27,6 @@ router.all('/:debug?/start', function(req, res) {
 	for (let y = 0; y < settings.height; y++) map.push(new Array(settings.width))
 
 	resetMap()
-
-	if (settings.debug) console.log(map)
-	if (settings.debug) console.log(settings)
 
 	// our values
 	const data = {
@@ -53,8 +50,8 @@ router.all('/debug?/move', function(req, res) {
 		}
 	}
 
-	if (settings.debug) console.log(req.body)
-	if (settings.debug) console.log(req.body.snakes[0].coords)
+	//if (settings.debug) console.log(req.body)
+	//if (settings.debug) console.log(req.body.snakes[0].coords)
 
 	// Response data
 	const data = {
