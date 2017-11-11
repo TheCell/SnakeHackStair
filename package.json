@@ -1,0 +1,24 @@
+{
+  "name": "snakehack-node",
+  "description": "A simple SankeHack AI written in Javascript for NodeJS",
+  "version": "0.0.0",
+  "private": true,
+  "author": "stair-ch",
+  "repository": "https://github.com/stair-ch/snakehack-node",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "express": "^4.14.1",
+    "morgan": "^1.8.1",
+    "nodemon": "^1.11.0"
+  },
+  "devDependencies": {
+    "foreman": "^2.0.0"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": "6.x"
+  },
+  "scripts": {
+    "start": "nf start"
+  }
+}

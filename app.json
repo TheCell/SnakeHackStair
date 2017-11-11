@@ -1,0 +1,7 @@
+{
+  "name": "SnakeHack Node",
+  "description": "A simple SnakeHack AI written in node.js",
+  "repository": "https://github.com/stair-ch/snakehack-node",
+  "website": "http://snakehack.stair.ch",
+  "keywords": ["snakehack", "stair"]
+}
