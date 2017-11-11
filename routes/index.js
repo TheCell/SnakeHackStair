@@ -61,7 +61,10 @@ router.all('/debug?/move', function(req, res) {
 function cost(x, y) {
 
 	// if x < 0
-
+  if (x < 0) return 10;
+  if (y < 0) return 10;
+  if (x > settings.width -1) return 10;
+  if (y > settings.height -1) return 10;
 
 	return map[x][y]
 
