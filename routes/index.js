@@ -62,7 +62,7 @@ router.all('/:debug?/move', function(req, res) {
 		let snakesArr = req.body.snakes;
 		snakesArr.forEach(function(snake, index) {
 			if (snake.id == settings.debugSnakeId) {
-				updateSnakeHead()
+				updateSnakeHead(snake.coords[0][0], snake.coords[0][1])
 			}
 		});
 	}
