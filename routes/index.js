@@ -70,11 +70,11 @@ router.all('/:debug?/move', function(req, res) {
 	for (let i = 0, snake; snake = res.body.dead_snakes[i]; i++) {
 		for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[0]][coords[1]] = 10
 	}
-
+*/
 
 	// movement
-	console.log(map)
-	console.log("stat", req.params.debug)
+	//console.log(map)
+	//console.log("stat", req.params.debug)
 
 	if (req.params.debug) console.log(map)
 
