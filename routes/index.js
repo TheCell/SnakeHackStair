@@ -138,7 +138,7 @@ function cost(x, y) {
 
 	if (isOutOfBound(x, y)) return 10
 
-	return map[x][y]
+	return map[y][x]
 }
 
 function nextMove() {
