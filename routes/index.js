@@ -126,7 +126,27 @@ router.all('/:debug?/move', function(req, res) {
 			}
 		}
 
-		for (let i = 0, coords; coords = snake.coords[i]; i++) map[coords[1]][coords[0]] = 10
+		for (let i = 0, coords; coords = snake.coords[i]; i++)
+    {
+        map[coords[1]][coords[0]] = 10
+
+        yLoop:
+        for (let y = 0; y < settings.height; y++) {
+          for (let x = 0; x < settings.width; x++) {
+
+            let cSquare = Math.pow(x - coords[0], 2) + Math.pow(y - coords[1], 2)
+            if (cSquare > 50)
+            {
+              break yLoop;
+            }
+            let maxDistance = settings.height * settings.height + settings.width * settings.width
+            let height = mapFunction(cSquare, 0, maxDistance, 3, 0)
+
+            map[y][x] = Math.max(height, map[y][x])
+
+          }
+        }
+    }
 
 		// calc height map
 
@@ -181,6 +201,26 @@ function updateSnakeHead(x, y) {
 
 function resetMap() {
 	for (let y = 0; y < settings.height; y++) map[y].fill(0)
+}
+
+// update arr with a point and height. values even out the further away from the point
+function setPointAndHeight(x, y, height)
+{
+  for (let y = 0; y < settings.height; y++) {
+    for (let x = 0; x < settings.width; x++) {
+
+      let cSquare = Math.pow(x - food[0], 2) + Math.pow(y - food[1], 2)
+      let maxDistance = settings.height * settings.height + settings.width * settings.width
+      let height = mapFunction(cSquare, 0, maxDistance, -30, 0)
+
+      map[y][x] = Math.min(height, map[y][x])
+
+    }
+  }
+}
+
+function lerp(v0, v1, t) {
+  return v0*(1-t)+v1*t
 }
 
 function indexOfMin(arr) {
