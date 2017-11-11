@@ -8,7 +8,7 @@ const settings = {}
 const map = []
 
 const isOutOfBound = (x, y) => x < 0 || x > settings.smallWidth || y < 0 || y > settings.smallHeight
-const mapFunction = (s, a1, a2, b1, b2) b1 + (s - a1) * (b2 - b1) / (a2 - a1)
+const mapFunction = (s, a1, a2, b1, b2) => b1 + (s - a1) * (b2 - b1) / (a2 - a1)
 
 const _directions = {
 	UP: "up",
