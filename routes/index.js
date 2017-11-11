@@ -8,16 +8,17 @@ const settings = {}
 const map = []
 
 const isOutOfBound = (x, y) => x < 0 || x > settings.smallWidth || y < 0 || y > settings.smallHeight
+const mapFunction = (s, a1, a2, b1, b2) b1 + (s - a1) * (b2 - b1) / (a2 - a1)
 
 const _directions = {
 	UP: "up",
 	RIGHT: "right",
 	BOTTOM: "down",
 	LEFT: "left",
-  0: "up",
-  1: "right",
-  2: "down",
-  3: "left"
+	0: "up",
+	1: "right",
+	2: "down",
+	3: "left"
 }
 
 // x, y
@@ -43,32 +44,30 @@ router.all('/:debug?/start', function(req, res) {
 
 		resetMap()
 
-  console.log("settings.setup", settings.setup);
-  console.log("settings.width", settings.width);
-  console.log("settings.smallWidth", settings.smallWidth);
-  console.log("settings.height", settings.height);
-  console.log("settings.smallHeight", settings.smallHeight);
-  console.log("settings.game_id", settings.game_id);
+		console.log("settings.setup", settings.setup);
+		console.log("settings.width", settings.width);
+		console.log("settings.smallWidth", settings.smallWidth);
+		console.log("settings.height", settings.height);
+		console.log("settings.smallHeight", settings.smallHeight);
+		console.log("settings.game_id", settings.game_id);
 	}
 
 	// our values
-  if (req.params.debug) {
-      var data = {
-      color: "#42f47d",
-      name: "Beemo",
-      head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
-      taunt: "Outta my way!"
-    }
-  }
-  else
-  {
-    var data = {
-		color: "#f46b42",
-		name: "Beemo",
-		head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
-		taunt: "Outta my way!"
-  	}
-  }
+	if (req.params.debug) {
+		var data = {
+			color: "#42f47d",
+			name: "Beemo",
+			head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
+			taunt: "Outta my way!"
+		}
+	} else {
+		var data = {
+			color: "#f46b42",
+			name: "Beemo",
+			head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
+			taunt: "Outta my way!"
+		}
+	}
 
 	return res.json(data)
 })
@@ -92,27 +91,42 @@ router.all('/:debug?/move', function(req, res) {
 	// update map
 	resetMap()
 
+	for (let i = 0, food; food = req.body.food[i]; i++) {
 
-  for (let snake of req.body.snakes) {
+		// calc hight map
+		let cSquare = Math.pow(snakeHeadPos[0] - food[1], 2) + Math.pow(snakeHeadPos[1] - food[0], 2)
+		let maxDistance = settings.height * settings.height + settings.width * settings.width
+		let height = mapFunction(cSquare, 0, maxDistance, -30, 0)
 
-    let head = snake.coords[0]
-    if (!isOutOfBound(head[0] + 1, head[1])) {
-     map[head[1]][head[0] + 1] = 5
-    }
-    if (!isOutOfBound(head[0] - 1, head[1])) {
-     map[head[1]][head[0] - 1] = 5
-    }
-    if (!isOutOfBound(head[0], head[1] + 1)) {
-     map[head[1] + 1][head[0]] = 5
-    }
-    if (!isOutOfBound(head[0], head[1] - 1)) {
-     map[head[1] - 1][head[0]] = 5
-    }
+		map[food[1]][food[0]] = height
 
-    for (let i = 0, coords; coords = snake.coords[i]; i++) map[coords[1]][coords[0]] = 10
-  }
 
-	for (let i = 0, food; food = req.body.food[i]; i++) map[food[1]][food[0]] = -5
+	}
+
+
+	for (let snake of req.body.snakes) {
+
+		if (snake.id != settings.debugSnakeId) {
+			let head = snake.coords[0]
+			if (!isOutOfBound(head[0] + 1, head[1])) {
+				map[head[1]][head[0] + 1] = 5
+			}
+			if (!isOutOfBound(head[0] - 1, head[1])) {
+				map[head[1]][head[0] - 1] = 5
+			}
+			if (!isOutOfBound(head[0], head[1] + 1)) {
+				map[head[1] + 1][head[0]] = 5
+			}
+			if (!isOutOfBound(head[0], head[1] - 1)) {
+				map[head[1] - 1][head[0]] = 5
+			}
+		}
+
+		for (let i = 0, coords; coords = snake.coords[i]; i++) map[coords[1]][coords[0]] = 10
+
+		// calc height map
+
+	}
 
 	for (let snake of req.body.dead_snakes) {
 		for (let i = 0, coords; coords = snake.coords[i]; i++) map[coords[1]][coords[0]] = 10
@@ -120,11 +134,11 @@ router.all('/:debug?/move', function(req, res) {
 
 	let nextMoveString = nextMove();
 
-  // Response data
-  if (req.params.debug) {
-    console.log(map)
-    console.log("nextMove", nextMoveString);
-  }
+	// Response data
+	if (req.params.debug) {
+		console.log(map)
+		console.log("nextMove", nextMoveString);
+	}
 
 	const data = {
 		move: nextMoveString, // one of: ['up','down','left','right']
@@ -142,16 +156,16 @@ function cost(x, y) {
 }
 
 function nextMove() {
-  // up, right, down, left
-  let movementCost = [];
+	// up, right, down, left
+	let movementCost = [];
 
-  movementCost[0] = cost(snakeHeadPos[0], snakeHeadPos[1] - 1);
-  movementCost[1] = cost(snakeHeadPos[0] + 1, snakeHeadPos[1]);
-  movementCost[2] = cost(snakeHeadPos[0], snakeHeadPos[1] + 1);
-  movementCost[3] = cost(snakeHeadPos[0] - 1, snakeHeadPos[1]);
+	movementCost[0] = cost(snakeHeadPos[0], snakeHeadPos[1] - 1);
+	movementCost[1] = cost(snakeHeadPos[0] + 1, snakeHeadPos[1]);
+	movementCost[2] = cost(snakeHeadPos[0], snakeHeadPos[1] + 1);
+	movementCost[3] = cost(snakeHeadPos[0] - 1, snakeHeadPos[1]);
 
-  let minIndex = indexOfMin(movementCost);
-  console.log("movementCost", movementCost, "index", minIndex);
+	let minIndex = indexOfMin(movementCost);
+	console.log("movementCost", movementCost, "index", minIndex);
 	return _directions[minIndex];
 }
 
