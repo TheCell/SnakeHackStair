@@ -10,19 +10,20 @@ const map = []
 */
 router.all('/:debug?/start', function(req, res) {
 	// save init values
-	settings.width = req.body.width
-	settings.height = req.body.height
+	settings.width = req.body.width * 1
+	settings.height = req.body.height * 1
 	settings.game_id = req.body.game_id
 
 	settings.debug = !!req.params.debug
 
 	// setup map
-	for (let y = 0; i < settings.height; i++) map.push(new Array(settings.width))
+	console.log("test", new Array(settings.width))
+	for (let y = 0; y < settings.height; y++) map.push(new Array(settings.width))
+
 	resetMap()
 
 	if (settings.debug) console.log(map)
-
-	//if (settings.debug) console.log(settings)
+	if (settings.debug) console.log(settings)
 
 	// our values
 	const data = {
