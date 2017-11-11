@@ -212,10 +212,12 @@ function cost(x, y) {
   if (x == settings.smallWidth && y == 0) return 4
   if (x == settings.smallWidth && y == settings.smallHeight) return 4
 
+  /*
   if (x == 0) return 2
   if (y == 0) return 2
   if (y == settings.smallHeight) return 2
   if (x == settings.smallWidth) return 2
+    */
 
 	return map[y][x]
 }
