@@ -29,7 +29,7 @@ router.all('/:debug?/start', function(req, res) {
 /*
   Handle Game Loop
 */
-router.all('/move', function(req, res) {
+router.all('/:debug?/move', function(req, res) {
 
   if (settings.debug) console.log(req.body)
 
