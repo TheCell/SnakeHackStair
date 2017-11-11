@@ -140,15 +140,17 @@ function cost(x, y) {
 
 function nextMove() {
   console.log("nextMove start");
-	// up, right, down, left
-	let movementCost = [];
+  // up, right, down, left
+  let movementCost = [];
 
-	movementCost[0] = cost(snakeHeadPos.x, snakeHeadPos.y - 1);
-	movementCost[1] = cost(snakeHeadPos.x + 1, snakeHeadPos.y);
-	movementCost[2] = cost(snakeHeadPos.x, snakeHeadPos.y + 1);
-	movementCost[3] = cost(snakeHeadPos.x - 1, snakeHeadPos.y);
+  movementCost[0] = cost(snakeHeadPos.x, snakeHeadPos.y - 1);
+  movementCost[1] = cost(snakeHeadPos.x + 1, snakeHeadPos.y);
+  movementCost[2] = cost(snakeHeadPos.x, snakeHeadPos.y + 1);
+  movementCost[3] = cost(snakeHeadPos.x - 1, snakeHeadPos.y);
 
-	let minIndex = indexOfMin(movementCost);
+  console.log("movementCost", movementCost);
+  let minIndex = indexOfMin(movementCost);
+  console.log("movenext end: minIndex", minIndex);
 	return _directions[minIndex];
 }
 
