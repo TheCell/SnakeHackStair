@@ -31,7 +31,8 @@ router.all('/:debug?/start', function(req, res) {
 */
 router.all('/debug?/move', function(req, res) {
 
-	if (settings.debug) console.log(req.body)
+  if (settings.debug) console.log(req.body)
+	if (settings.debug) console.log(req.body.snakes[0].coords)
 
 	// Response data
 	const data = {
