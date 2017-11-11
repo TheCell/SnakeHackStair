@@ -159,8 +159,8 @@ router.all('/:debug?/move', function(req, res) {
             }
             let height = mapFunction(cSquare, 0, maxDistance, 0, 30);
 
-						map[y][x] = Math.max(height, map[y][x])
-
+						//map[y][x] = Math.max(height, map[y][x])
+            map[y][x] = height + map[y][x];
 					}
 				}
 		}
