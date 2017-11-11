@@ -52,6 +52,7 @@ router.all('/:debug?/start', function(req, res) {
 		settings.game_id = req.body.game_id
 
 		// setup map
+    map.length = 0;
 		for (let y = 0; y < settings.height; y++) map.push(new Array(settings.width))
 
 		resetMap()
