@@ -135,6 +135,7 @@ function cost(x, y) {
 }
 
 function nextMove() {
+  console.log("nextMove start");
 	// up, right, down, left
 	let movementCost = [];
 
