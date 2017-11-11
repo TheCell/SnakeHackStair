@@ -27,7 +27,6 @@ router.all('/:debug?/start', function(req, res) {
 
 	// setup map
 	for (let y = 0; y < settings.height; y++) map.push(new Array(settings.width))
-
 	resetMap()
 
 	// our values
@@ -46,32 +45,32 @@ router.all('/:debug?/start', function(req, res) {
 */
 router.all('/:debug?/move', function(req, res) {
 
+	console.log(res.body)
+
 	// update map
 	resetMap()
-	/*
-		for (let i = 0, food; food = res.body.food[i]; i++) map[food[0]][food[1]] = -5
 
-		for (let i = 0, snake; snake = res.body.snakes[i]; i++) {
+	for (let i = 0, food; food = res.body.food[i]; i++) map[food[0]][food[1]] = -5
 
-			let head = snake.coords[0]
-			if (isOutOfBound(head[0] + 1, head[1])) map[head[0] + 1][head[1]] = 5
-			if (isOutOfBound(head[0] - 1, head[1])) map[head[0] - 1][head[1]] = 5
-			if (isOutOfBound(head[0], head[1] + 1)) map[head[0]][head[1] + 1] = 5
-			if (isOutOfBound(head[0], head[1] - 1)) map[head[0]][head[1] - 1] = 5
+	for (let i = 0, snake; snake = res.body.snakes[i]; i++) {
 
-			for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[0]][coords[1]] = 10
+		let head = snake.coords[0]
+		if (isOutOfBound(head[0] + 1, head[1])) map[head[0] + 1][head[1]] = 5
+		if (isOutOfBound(head[0] - 1, head[1])) map[head[0] - 1][head[1]] = 5
+		if (isOutOfBound(head[0], head[1] + 1)) map[head[0]][head[1] + 1] = 5
+		if (isOutOfBound(head[0], head[1] - 1)) map[head[0]][head[1] - 1] = 5
 
-		}
+		for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[0]][coords[1]] = 10
 
-		for (let i = 0, snake; snake = res.body.dead_snakes[i]; i++) {
-			for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[0]][coords[1]] = 10
-		}
-	*/
+	}
+
+	for (let i = 0, snake; snake = res.body.dead_snakes[i]; i++) {
+		for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[0]][coords[1]] = 10
+	}
+
 
 	// movement
-	console.log(map)
-	console.log("stat", settings.debug)
-
+	if (req.params.debug) console.log("*********************************************************")
 	if (req.params.debug) console.log(map)
 
 	// Response data
