@@ -12,10 +12,11 @@ const mapFunction = (s, a1, a2, b1, b2) => b1 + (s - a1) * (b2 - b1) / (a2 - a1)
 const printMap = _ => {
 	let out = ""
 	for (let y = 0; y < settings.height; y++) {
-		for (let x = 0; x < settings.width; x++) {
-			out += map[y][x] + " "
-		}
-		out += "\n"
+		out += "" + y + " ["
+    for (let x = 0; x < settings.width; x++) {
+      out += map[y][x] + " "
+    }
+    out += "]\n"
 	}
 
   console.log(out);
@@ -155,7 +156,7 @@ router.all('/:debug?/move', function(req, res) {
             {
               break yLoop;
             }
-            let height = mapFunction(cSquare, 0, maxDistance, 5, 0)
+            let height = mapFunction(cSquare, 0, maxDistance, 10, 0)
 
 						map[y][x] = Math.max(height, map[y][x])
 
