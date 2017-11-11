@@ -56,6 +56,9 @@ router.all('/:debug?/start', function(req, res) {
 
 		resetMap()
 
+    let maxDistance = settings.height * settings.height + settings.width * settings.width;
+    console.log("maxDistance", maxDistance);
+
 		//console.log("settings.setup", settings.setup);
 		//console.log("settings.width", settings.width);
 		//console.log("settings.smallWidth", settings.smallWidth);
