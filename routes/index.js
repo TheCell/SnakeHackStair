@@ -173,6 +173,10 @@ router.all('/:debug?/move', function(req, res) {
 				}
 		}
 
+    for (let i = 0, coords; coords = snake.coords[i]; i++) {
+      map[coords[1]][coords[0]] = 11;
+    }
+
 		// calc height map
 
 	}
@@ -185,7 +189,7 @@ router.all('/:debug?/move', function(req, res) {
 
 	// Response data
 	if (req.params.debug) {
-		//printMap();
+		printMap();
 		//console.log("nextMove", nextMoveString);
 	}
 
