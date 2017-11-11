@@ -135,6 +135,8 @@ router.all('/:debug?/move', function(req, res) {
           continue;
         }
 
+        let maxDistance = settings.height * settings.height + settings.width * settings.width;
+
         yLoop:
         for (let y = 0; y < settings.height; y++) {
           for (let x = 0; x < settings.width; x++) {
@@ -144,7 +146,6 @@ router.all('/:debug?/move', function(req, res) {
             {
               break yLoop;
             }
-            let maxDistance = settings.height * settings.height + settings.width * settings.width
             let height = mapFunction(cSquare, 0, maxDistance, 3, 0)
 
             map[y][x] = Math.max(height, map[y][x])
@@ -209,13 +210,14 @@ function resetMap() {
 }
 
 // update arr with a point and height. values even out the further away from the point
-function setPointAndHeight(x, y, height)
+function setPointAndHeight(xPoint, yPoint, height)
 {
+  let maxDistance = settings.height * settings.height + settings.width * settings.width;
+
   for (let y = 0; y < settings.height; y++) {
     for (let x = 0; x < settings.width; x++) {
 
-      let cSquare = Math.pow(x - food[0], 2) + Math.pow(y - food[1], 2)
-      let maxDistance = settings.height * settings.height + settings.width * settings.width
+      let cSquare = Math.pow(x - xPoint, 2) + Math.pow(y - yPoint, 2)
       let height = mapFunction(cSquare, 0, maxDistance, -30, 0)
 
       map[y][x] = Math.min(height, map[y][x])
