@@ -168,11 +168,9 @@ router.all('/:debug?/move', function(req, res) {
             {
               continue;
             }
-            map[y][x] = Math.min(height + map[y][x], 9.9);
+            map[y][x] = Math.min(height + map[y][x], 10);
 					}
 				}
-      map[coords[1]][coords[0]] = 10
-
 		}
 
 		// calc height map
@@ -187,7 +185,7 @@ router.all('/:debug?/move', function(req, res) {
 
 	// Response data
 	if (req.params.debug) {
-		printMap();
+		//printMap();
 		//console.log("nextMove", nextMoveString);
 	}
 
