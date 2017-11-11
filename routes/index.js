@@ -109,8 +109,8 @@ router.all('/:debug?/move', function(req, res) {
 
 	for (let i = 0, food; food = req.body.food[i]; i++) {
 
-		for (let y = 1; y < settings.height -1; y++) {
-			for (let x = 1; x < settings.width -1; x++) {
+		for (let y = 0; y < settings.height; y++) {
+			for (let x = 0; x < settings.width; x++) {
 
 				let cSquare = Math.pow(x - food[0], 2) + Math.pow(y - food[1], 2)
 				let maxDistance = settings.height * settings.height + settings.width * settings.width
