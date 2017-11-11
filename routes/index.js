@@ -12,11 +12,11 @@ const isOutOfBound = (x, y) => x < 0 || x > settings.smallWidth || y < 0 || y > 
 const _directions = {
 	UP: "up",
 	RIGHT: "right",
-	BOTTOM: "bottom",
+	BOTTOM: "down",
 	LEFT: "left",
   0: "up",
   1: "right",
-  2: "bottom",
+  2: "down",
   3: "left"
 }
 
