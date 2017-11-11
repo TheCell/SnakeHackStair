@@ -43,6 +43,12 @@ router.all('/:debug?/start', function(req, res) {
 
 		resetMap()
 
+  console.log("settings.setup", settings.setup);
+  console.log("settings.width", settings.width);
+  console.log("settings.smallWidth", settings.smallWidth);
+  console.log("settings.height", settings.height);
+  console.log("settings.smallHeight", settings.smallHeight);
+  console.log("settings.game_id", settings.game_id);
 	}
 
 	// our values
