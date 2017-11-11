@@ -46,7 +46,7 @@ router.all('/:debug?/start', function(req, res) {
 */
 router.all('/:debug?/move', function(req, res) {
 
-	console.log(res.body)
+	console.log(req.body)
 
 	// update map
 	resetMap()
@@ -74,7 +74,7 @@ router.all('/:debug?/move', function(req, res) {
 
 	// movement
 	//console.log(map)
-	//console.log("stat", req.params.debug)
+	console.log("stat", req.params.debug)
 
 	if (req.params.debug) console.log(map)
 
