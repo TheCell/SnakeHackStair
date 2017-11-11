@@ -5,11 +5,14 @@ const settings = {}
 
 const map = []
 const _directions = {
-	UP: "up",
-	RIGHT: "right",
-	BOTTOM: "bottom",
-	LEFT: "left"
+  UP: "up",
+  RIGHT: "right",
+  BOTTOM: "bottom",
+  LEFT: "left"
 }
+
+// x, y
+const snakeHeadPos = [0, 0];
 
 /*
   Handle Game Start
@@ -74,7 +77,7 @@ router.all('/debug?/move', function(req, res) {
 
 	// Response data
 	const data = {
-		move: 'up', // one of: ['up','down','left','right']
+		move: nextMove(), // one of: ['up','down','left','right']
 		taunt: 'Outta my way, snake!'
 	}
 
@@ -88,11 +91,46 @@ function cost(x, y) {
 	if (isOutOfBound(x, y)) return 10
 
 	return map[x][y]
+}
 
+function nextMove() {
+  // up, right, down, left
+  let movementCost = [];
+
+  movementCost[0] = cost(snakeHeadPos.x, snakeHeadPos.y -1);
+  movementCost[1] = cost(snakeHeadPos.x +1, snakeHeadPos.y);
+  movementCost[2] = cost(snakeHeadPos.x, snakeHeadPos.y +1);
+  movementCost[3] = cost(snakeHeadPos.x -1, snakeHeadPos.y);
+
+  let minIndex = indexOfMin(movementCost);
+  return _directions[minIndex];
+}
+
+function updateSnakeHead(x, y) {
+  snakeHeadPos[0] = x;
+  snakeHeadPos[1] = y;
 }
 
 function resetMap() {
 	for (let y = 0; y < settings.height; y++) map[y].fill(0)
+}
+
+function indexOfMin(arr) {
+  if (arr.length === 0) {
+    return -1;
+  }
+
+  var min = arr[0];
+  var minIndex = 0;
+
+  for (var i = 1; i < arr.length; i++) {
+    if (arr[i] < min) {
+      minIndex = i;
+      min = arr[i];
+    }
+  }
+
+  return minIndex;
 }
 
 module.exports = router
