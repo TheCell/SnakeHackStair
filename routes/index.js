@@ -6,13 +6,13 @@ const settings = {}
 /*
   Handle Game Start
 */
-router.all('/start', function(req, res) {
+router.all('/:debug?/start', function(req, res) {
 	// save init values
 	settings.width = req.body.width
 	settings.height = req.body.height
 	settings.game_id = req.body.game_id
 
-	console.log(settings)
+	if (req.params.debug) console.log(settings)
 
 	// our values
 	const data = {
