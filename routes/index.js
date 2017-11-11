@@ -5,10 +5,10 @@ const settings = {}
 
 const map = []
 const _directions = {
-  UP: "up",
-  RIGHT: "right",
-  BOTTOM: "bottom",
-  LEFT: "left"
+	UP: "up",
+	RIGHT: "right",
+	BOTTOM: "bottom",
+	LEFT: "left"
 }
 
 // x, y
@@ -50,25 +50,25 @@ router.all('/debug?/move', function(req, res) {
 
 	// update map
 	resetMap()
+	/*
+		for (let i = 0, food; food = res.body.food[i]; i++) map[food[0]][food[1]] = -5
 
-	for (let i = 0, food; food = res.body.food[i]; i++) map[food[0]][food[1]] = -5
+		for (let i = 0, snake; snake = res.body.snakes[i]; i++) {
 
-	for (let i = 0, snake; snake = res.body.snakes[i]; i++) {
+			let head = snake.coords[0]
+			if (isOutOfBound(head[0] + 1, head[1])) map[head[0] + 1][head[1]] = 5
+			if (isOutOfBound(head[0] - 1, head[1])) map[head[0] - 1][head[1]] = 5
+			if (isOutOfBound(head[0], head[1] + 1)) map[head[0]][head[1] + 1] = 5
+			if (isOutOfBound(head[0], head[1] - 1)) map[head[0]][head[1] - 1] = 5
 
-		let head = snake.coords[0]
-		if (isOutOfBound(head[0] + 1, head[1])) map[head[0] + 1][head[1]] = 5
-		if (isOutOfBound(head[0] - 1, head[1])) map[head[0] - 1][head[1]] = 5
-		if (isOutOfBound(head[0], head[1] + 1)) map[head[0]][head[1] + 1] = 5
-		if (isOutOfBound(head[0], head[1] - 1)) map[head[0]][head[1] - 1] = 5
+			for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[0]][coords[1]] = 10
 
-		for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[0]][coords[1]] = 10
+		}
 
-	}
-
-	for (let i = 0, snake; snake = res.body.dead_snakes[i]; i++) {
-		for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[0]][coords[1]] = 10
-	}
-
+		for (let i = 0, snake; snake = res.body.dead_snakes[i]; i++) {
+			for (let j = 0, coords; coords = snake.coords[j]; j++) map[coords[0]][coords[1]] = 10
+		}
+	*/
 
 	// movement
 
@@ -94,21 +94,21 @@ function cost(x, y) {
 }
 
 function nextMove() {
-  // up, right, down, left
-  let movementCost = [];
+	// up, right, down, left
+	let movementCost = [];
 
-  movementCost[0] = cost(snakeHeadPos.x, snakeHeadPos.y -1);
-  movementCost[1] = cost(snakeHeadPos.x +1, snakeHeadPos.y);
-  movementCost[2] = cost(snakeHeadPos.x, snakeHeadPos.y +1);
-  movementCost[3] = cost(snakeHeadPos.x -1, snakeHeadPos.y);
+	movementCost[0] = cost(snakeHeadPos.x, snakeHeadPos.y - 1);
+	movementCost[1] = cost(snakeHeadPos.x + 1, snakeHeadPos.y);
+	movementCost[2] = cost(snakeHeadPos.x, snakeHeadPos.y + 1);
+	movementCost[3] = cost(snakeHeadPos.x - 1, snakeHeadPos.y);
 
-  let minIndex = indexOfMin(movementCost);
-  return _directions[minIndex];
+	let minIndex = indexOfMin(movementCost);
+	return _directions[minIndex];
 }
 
 function updateSnakeHead(x, y) {
-  snakeHeadPos[0] = x;
-  snakeHeadPos[1] = y;
+	snakeHeadPos[0] = x;
+	snakeHeadPos[1] = y;
 }
 
 function resetMap() {
@@ -116,21 +116,21 @@ function resetMap() {
 }
 
 function indexOfMin(arr) {
-  if (arr.length === 0) {
-    return -1;
-  }
+	if (arr.length === 0) {
+		return -1;
+	}
 
-  var min = arr[0];
-  var minIndex = 0;
+	var min = arr[0];
+	var minIndex = 0;
 
-  for (var i = 1; i < arr.length; i++) {
-    if (arr[i] < min) {
-      minIndex = i;
-      min = arr[i];
-    }
-  }
+	for (var i = 1; i < arr.length; i++) {
+		if (arr[i] < min) {
+			minIndex = i;
+			min = arr[i];
+		}
+	}
 
-  return minIndex;
+	return minIndex;
 }
 
 module.exports = router
