@@ -27,11 +27,12 @@ router.all('/:debug?/start', function(req, res) {
 	if (settings.game_id != req.body.game_id || req.body.width != settings.width || req.body.height != settings.height) {
 
 		// save init values
-		settings.setup = true
 		settings.width = req.body.width * 1
 		settings.smallWidth = settings.width - 1
 		settings.height = req.body.height * 1
 		settings.smallHeight = settings.height - 1
+		settings.maxDistance = settings.height * settings.height + settings.width * settings.width
+
 		settings.game_id = req.body.game_id
 
 		// setup map
@@ -71,9 +72,12 @@ router.all('/:debug?/move', function(req, res) {
 		settings.debugSnakeId = req.body.you
 
 		let snakesArr = req.body.snakes
-		snakesArr.forEach(snake => {
-			if (snake.id == settings.debugSnakeId) updateSnakeHead(snake.coords[0][0], snake.coords[0][1])
-		})
+		for (let snake of req.body.snakes) {
+			if (snake.id == settings.debugSnakeId) {
+				snakeHeadPos = snake.coords[0]
+				break
+			}
+		}
 
 	}
 
@@ -88,8 +92,7 @@ router.all('/:debug?/move', function(req, res) {
 			for (let x = 0; x < settings.width; x++) {
 
 				let cSquare = Math.pow(x - food[0], 2) + Math.pow(y - food[1], 2)
-				let maxDistance = settings.height * settings.height + settings.width * settings.width
-				let height = mapFunction(cSquare, 0, maxDistance, -90, 0)
+				let height = mapFunction(cSquare, 0, settings.maxDistance, -90, 0)
 
 				map[y][x] = Math.min(height, map[y][x])
 
@@ -186,29 +189,8 @@ function nextMove() {
 	return _directions[minIndex]
 }
 
-function updateSnakeHead(x, y) {
-	snakeHeadPos[0] = x
-	snakeHeadPos[1] = y
-}
-
 function resetMap() {
 	for (let y = 0; y < settings.height; y++) map[y].fill(0)
-}
-
-// update arr with a point and height. values even out the further away from the point
-function setPointAndHeight(xPoint, yPoint, height) {
-	let maxDistance = settings.height * settings.height + settings.width * settings.width
-
-	for (let y = 0; y < settings.height; y++) {
-		for (let x = 0; x < settings.width; x++) {
-
-			let cSquare = Math.pow(x - xPoint, 2) + Math.pow(y - yPoint, 2)
-			let height = mapFunction(cSquare, 0, maxDistance, -30, 0)
-
-			map[y][x] = Math.min(height, map[y][x])
-
-		}
-	}
 }
 
 function indexOfMin(arr) {
