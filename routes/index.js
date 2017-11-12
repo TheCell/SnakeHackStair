@@ -1,26 +1,9 @@
-'use strict'
-
 const express = require('express')
 const router = express.Router()
 
 const settings = {}
 
 const map = []
-
-const isOutOfBound = (x, y) => x < 0 || x > settings.smallWidth || y < 0 || y > settings.smallHeight
-const mapFunction = (s, a1, a2, b1, b2) => b1 + (s - a1) * (b2 - b1) / (a2 - a1)
-const printMap = _ => {
-	let out = ""
-	for (let y = 0; y < settings.height; y++) {
-		out += "["
-    for (let x = 0; x < settings.width; x++) {
-      out += map[y][x].toFixed(3) + "\t"
-    }
-    out += "]\n"
-	}
-
-  console.log(out);
-}
 
 const _directions = {
 	UP: "up",
@@ -34,14 +17,14 @@ const _directions = {
 }
 
 // x, y
-const snakeHeadPos = [0, 0];
+const snakeHeadPos = [0, 0]
 
 /*
   Handle Game Start
 */
 router.all('/:debug?/start', function(req, res) {
 
-	if (settings.game_id != req.body.game_id || (req.body.width != settings.width) || (req.body.height != settings.height) ) {
+	if (settings.game_id != req.body.game_id || req.body.width != settings.width || req.body.height != settings.height) {
 
 		// save init values
 		settings.setup = true
@@ -52,20 +35,11 @@ router.all('/:debug?/start', function(req, res) {
 		settings.game_id = req.body.game_id
 
 		// setup map
-    map.length = 0;
+		map.length = 0
 		for (let y = 0; y < settings.height; y++) map.push(new Array(settings.width))
 
 		resetMap()
 
-    let maxDistance = settings.height * settings.height + settings.width * settings.width;
-    console.log("maxDistance", maxDistance);
-
-		//console.log("settings.setup", settings.setup);
-		//console.log("settings.width", settings.width);
-		//console.log("settings.smallWidth", settings.smallWidth);
-		//console.log("settings.height", settings.height);
-		//console.log("settings.smallHeight", settings.smallHeight);
-		//console.log("settings.game_id", settings.game_id);
 	}
 
 	// our values
@@ -73,14 +47,14 @@ router.all('/:debug?/start', function(req, res) {
 		var data = {
 			color: "#42f47d",
 			name: "Beemo",
-			head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
+			head_url: "http://dev.thecell.eu/beemo/beemo_500.gif",
 			taunt: "Beep Boop!"
 		}
 	} else {
 		var data = {
 			color: "#f46b42",
 			name: "Beemo",
-			head_url: "http://dev.thecell.eu/beemo/beemo_500.gif", // optional, but encouraged!
+			head_url: "http://dev.thecell.eu/beemo/beemo_500.gif",
 			taunt: "Outta my way!"
 		}
 	}
@@ -94,106 +68,87 @@ router.all('/:debug?/start', function(req, res) {
 router.all('/:debug?/move', function(req, res) {
 
 	if (req.params.debug) {
-		settings.debugSnakeId = req.body.you;
-		console.log("debugSnakeId", settings.debugSnakeId);
-		let snakesArr = req.body.snakes;
-		snakesArr.forEach(function(snake, index) {
-			if (snake.id == settings.debugSnakeId) {
-				updateSnakeHead(snake.coords[0][0], snake.coords[0][1])
-			}
-		});
+		settings.debugSnakeId = req.body.you
+
+		let snakesArr = req.body.snakes
+		snakesArr.forEach(snake => {
+			if (snake.id == settings.debugSnakeId) updateSnakeHead(snake.coords[0][0], snake.coords[0][1])
+		})
+
 	}
 
 	// update map
 	resetMap()
 
 	for (let i = 0, food; food = req.body.food[i]; i++) {
-    if ((food[0] > 0 || food[0] < settings.smallWidth) && (food[1] > 0 || food[1] < settings.smallHeight))
-    {
-  		for (let y = 0; y < settings.height; y++) {
-  			for (let x = 0; x < settings.width; x++) {
 
-  				let cSquare = Math.pow(x - food[0], 2) + Math.pow(y - food[1], 2)
-  				let maxDistance = settings.height * settings.height + settings.width * settings.width
-  				let height = mapFunction(cSquare, 0, maxDistance, -90, 0) // was -30
+		if (food[0] < 0 || food[0] > settings.smallWidth || food[1] < 0 || food[1] > settings.smallHeight) continue
 
-  				map[y][x] = Math.min(height, map[y][x])
+		for (let y = 0; y < settings.height; y++) {
+			for (let x = 0; x < settings.width; x++) {
 
-  			}
-  		}
-    }
+				let cSquare = Math.pow(x - food[0], 2) + Math.pow(y - food[1], 2)
+				let maxDistance = settings.height * settings.height + settings.width * settings.width
+				let height = mapFunction(cSquare, 0, maxDistance, -90, 0)
+
+				map[y][x] = Math.min(height, map[y][x])
+
+			}
+		}
+
 
 	}
 
 
 	for (let snake of req.body.snakes) {
 
+		// possible head movements
 		if (snake.id != settings.debugSnakeId) {
+
 			let head = snake.coords[0]
-			if (!isOutOfBound(head[0] + 1, head[1])) {
-				map[head[1]][head[0] + 1] = 5
-			}
-			if (!isOutOfBound(head[0] - 1, head[1])) {
-				map[head[1]][head[0] - 1] = 5
-			}
-			if (!isOutOfBound(head[0], head[1] + 1)) {
-				map[head[1] + 1][head[0]] = 5
-			}
-			if (!isOutOfBound(head[0], head[1] - 1)) {
-				map[head[1] - 1][head[0]] = 5
-			}
+			if (!isOutOfBound(head[0] + 1, head[1])) map[head[1]][head[0] + 1] = 5
+			if (!isOutOfBound(head[0] - 1, head[1])) map[head[1]][head[0] - 1] = 5
+			if (!isOutOfBound(head[0], head[1] + 1)) map[head[1] + 1][head[0]] = 5
+			if (!isOutOfBound(head[0], head[1] - 1)) map[head[1] - 1][head[0]] = 5
+
 		}
 
+		// elevate ground around the snakes
 		for (let i = 0, coords; coords = snake.coords[i]; i++) {
-      map[coords[1]][coords[0]] = 10
+			map[coords[1]][coords[0]] = 10
 
-      // WAS 3
-			if (i < 8) {
-				continue;
-			}
+			// snake to short, no elevation needed
+			if (i < 8) continue
 
-        let maxDistance = settings.height * settings.height + settings.width * settings.width;
 
-        yLoop:
-        for (let y = 0; y < settings.height; y++) {
-          for (let x = 0; x < settings.width; x++) {
+			for (let y = 0; y < settings.height; y++) {
+				for (let x = 0; x < settings.width; x++) {
 
-            let cSquare = Math.pow(x - coords[0], 2) + Math.pow(y - coords[1], 2)
-            if (cSquare > 20)
-            {
-              //break yLoop;
-              continue;
-            }
-            let height = mapFunction(cSquare, 0, 20, 0, 11); // was 30
+					//  don't chnage the food object
+					if (map[y][x] < -88) continue
 
-						//map[y][x] = Math.max(height, map[y][x])
-            if (map[y][x] < -88)
-            {
-              continue;
-            }
-            map[y][x] = Math.min(height + map[y][x], 10);
-					}
+					let cSquare = Math.pow(x - coords[0], 2) + Math.pow(y - coords[1], 2)
+
+					// to fare away
+					if (cSquare > 20) continue
+
+					let height = mapFunction(cSquare, 0, 20, 0, 11)
+					map[y][x] = Math.min(height + map[y][x], 10)
+
 				}
+			}
 		}
 
-    for (let i = 0, coords; coords = snake.coords[i]; i++) {
-      map[coords[1]][coords[0]] = 11;
-    }
-
-		// calc height map
-
-	}
-/*
-	for (let snake of req.body.dead_snakes) {
+		// draw the snakes again with the highest possible value
 		for (let i = 0, coords; coords = snake.coords[i]; i++) map[coords[1]][coords[0]] = 11
-	}
-*/
-	let nextMoveString = nextMove();
 
-	// Response data
+	}
+
+	let nextMoveString = nextMove()
+
 	if (req.params.debug) {
-		//printMap();
-		//console.log("nextMove", nextMoveString);
+		//printMap()
+		//console.log("nextMove", nextMoveString)
 	}
 
 	const data = {
@@ -207,39 +162,33 @@ router.all('/:debug?/move', function(req, res) {
 function cost(x, y) {
 
 	if (isOutOfBound(x, y)) return 11
-  if (x == 0 && y == 0) return 4
-  if (x == 0 && y == settings.smallHeight) return 4
-  if (x == settings.smallWidth && y == 0) return 4
-  if (x == settings.smallWidth && y == settings.smallHeight) return 4
 
-  /*
-  if (x == 0) return 2
-  if (y == 0) return 2
-  if (y == settings.smallHeight) return 2
-  if (x == settings.smallWidth) return 2
-    */
+	// expensive corners
+	if (x == 0 && y == 0) return 4
+	if (x == 0 && y == settings.smallHeight) return 4
+	if (x == settings.smallWidth && y == 0) return 4
+	if (x == settings.smallWidth && y == settings.smallHeight) return 4
 
 	return map[y][x]
 }
 
 function nextMove() {
 	// up, right, down, left
-	let movementCost = [];
+	let movementCost = [
+		cost(snakeHeadPos[0], snakeHeadPos[1] - 1),
+		cost(snakeHeadPos[0] + 1, snakeHeadPos[1]),
+		cost(snakeHeadPos[0], snakeHeadPos[1] + 1),
+		cost(snakeHeadPos[0] - 1, snakeHeadPos[1])
+	]
 
-	movementCost[0] = cost(snakeHeadPos[0], snakeHeadPos[1] - 1);
-	movementCost[1] = cost(snakeHeadPos[0] + 1, snakeHeadPos[1]);
-	movementCost[2] = cost(snakeHeadPos[0], snakeHeadPos[1] + 1);
-	movementCost[3] = cost(snakeHeadPos[0] - 1, snakeHeadPos[1]);
+	let minIndex = indexOfMin(movementCost)
 
-	let minIndex = indexOfMin(movementCost);
-	console.log("movementCost", movementCost, "index", minIndex);
-	return _directions[minIndex];
+	return _directions[minIndex]
 }
 
 function updateSnakeHead(x, y) {
-	console.log("update snake head: ", x, y);
-	snakeHeadPos[0] = x;
-	snakeHeadPos[1] = y;
+	snakeHeadPos[0] = x
+	snakeHeadPos[1] = y
 }
 
 function resetMap() {
@@ -247,15 +196,14 @@ function resetMap() {
 }
 
 // update arr with a point and height. values even out the further away from the point
-function setPointAndHeight(xPoint, yPoint, height)
-{
-  let maxDistance = settings.height * settings.height + settings.width * settings.width;
+function setPointAndHeight(xPoint, yPoint, height) {
+	let maxDistance = settings.height * settings.height + settings.width * settings.width
 
-  for (let y = 0; y < settings.height; y++) {
-    for (let x = 0; x < settings.width; x++) {
+	for (let y = 0; y < settings.height; y++) {
+		for (let x = 0; x < settings.width; x++) {
 
-      let cSquare = Math.pow(x - xPoint, 2) + Math.pow(y - yPoint, 2)
-      let height = mapFunction(cSquare, 0, maxDistance, -30, 0)
+			let cSquare = Math.pow(x - xPoint, 2) + Math.pow(y - yPoint, 2)
+			let height = mapFunction(cSquare, 0, maxDistance, -30, 0)
 
 			map[y][x] = Math.min(height, map[y][x])
 
@@ -263,26 +211,41 @@ function setPointAndHeight(xPoint, yPoint, height)
 	}
 }
 
-function lerp(v0, v1, t) {
-	return v0 * (1 - t) + v1 * t
-}
-
 function indexOfMin(arr) {
-	if (arr.length === 0) {
-		return -1;
-	}
+	if (arr.length === 0) return -1
 
-	var min = arr[0];
-	var minIndex = 0;
+	let min = arr[0]
+	let minIndex = 0
 
-	for (var i = 1; i < arr.length; i++) {
+	for (let i = 1; i < arr.length; i++) {
 		if (arr[i] < min) {
-			minIndex = i;
-			min = arr[i];
+			minIndex = i
+			min = arr[i]
 		}
 	}
 
-	return minIndex;
+	return minIndex
 }
+
+
+function isOutOfBound(x, y) {
+	return x < 0 || x > settings.smallWidth || y < 0 || y > settings.smallHeight
+}
+
+function mapFunction(s, a1, a2, b1, b2) {
+	return b1 + (s - a1) * (b2 - b1) / (a2 - a1)
+}
+
+function printMap() {
+	let out = ""
+	for (let y = 0; y < settings.height; y++) {
+		out += "["
+		for (let x = 0; x < settings.width; x++) out += map[y][x].toFixed(3) + "\t"
+		out += "]\n"
+	}
+
+	console.log(out)
+}
+
 
 module.exports = router
